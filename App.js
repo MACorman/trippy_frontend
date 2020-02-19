@@ -15,6 +15,9 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+import UserContainer from './containers/UserContainer';
+import NavBar from './containers/NavBar'
+import LoginSignUp from './components/LoginSignUp'
 
 // import {
 //   Header,
@@ -32,6 +35,9 @@ const App: () => React$Node = () => {
         <ScrollView>
           <View>
             <Text>Hello World</Text>
+            <UserContainer />
+            <NavBar />
+            <LoginSignUp />
           </View>
         </ScrollView>
       </SafeAreaView>
