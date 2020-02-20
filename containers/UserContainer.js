@@ -5,13 +5,33 @@ import {
     ScrollView,
     View,
     Text,
+    Image
   } from 'react-native';
+import SchedulesContainer from './SchedulesContainer'
+import ScheduleShow from './ScheduleShow'
+
 
 class UserContainer extends React.Component {
+
+    state = {
+        showSchedule: false,
+        selectedSchedule: {}
+    }
+
+    viewSchedule = (id) => {
+        let selectedSchedule = this.props.currentUser.schedules.find(schedule => schedule.id === parseInt(id))
+        this.setState({ selectedSchedule })
+        this.setState({showSchedule: !this.state.showSchedule})
+
+    }
+
     render() {
         return (
             <View>
-                <Text>User Container</Text>
+                <Text style={{ fontSize: 25 }} >{this.props.currentUser.username}</Text>
+                <Image style={{height: 100, width: 100 }} source={{uri: this.props.currentUser.image}}/>
+                {/* <SchedulesContainer schedules={this.props.currentUser.schedules} viewSchedule={this.viewSchedule} />
+                {this.state.showSchedule && <ScheduleShow schedule={this.state.selectedSchedule} />} */}
             </View>
         )
     }

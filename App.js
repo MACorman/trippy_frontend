@@ -1,87 +1,78 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React from 'react';
+import React from 'react'
 import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
   Text,
-  StatusBar,
-} from 'react-native';
-import UserContainer from './containers/UserContainer';
+  StatusBar
+} from 'react-native'
+import UserContainer from './containers/UserContainer'
 import NavBar from './containers/NavBar'
 import LoginSignUp from './components/LoginSignUp'
+import AsyncStorage from '@react-native-community/async-storage'
 
-// import {
-//   Header,
-//   LearnMoreLinks,
-//   Colors,
-//   DebugInstructions,
-//   ReloadInstructions,
-// } from 'react-native/Libraries/NewAppScreen';
+class App extends React.Component {
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView>
-          <View>
-            <Text>Hello World</Text>
-            <UserContainer />
-            <NavBar />
-            <LoginSignUp />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+  state = {
+    users: [],
+    currentUser: {}
+  }
 
-// const styles = StyleSheet.create({
-//   scrollView: {
-//     backgroundColor: Colors.lighter,
-//   },
-//   engine: {
-//     position: 'absolute',
-//     right: 0,
-//   },
-//   body: {
-//     backgroundColor: Colors.white,
-//   },
-//   sectionContainer: {
-//     marginTop: 32,
-//     paddingHorizontal: 24,
-//   },
-//   sectionTitle: {
-//     fontSize: 24,
-//     fontWeight: '600',
-//     color: Colors.black,
-//   },
-//   sectionDescription: {
-//     marginTop: 8,
-//     fontSize: 18,
-//     fontWeight: '400',
-//     color: Colors.dark,
-//   },
-//   highlight: {
-//     fontWeight: '700',
-//   },
-//   footer: {
-//     color: Colors.dark,
-//     fontSize: 12,
-//     fontWeight: '600',
-//     padding: 4,
-//     paddingRight: 12,
-//     textAlign: 'right',
-//   },
-// });
+  componentDidMount() {
+    fetch("http://localhost:3000/users")
+    .then(resp => resp.json())
+    .then(users => this.setState({ users }))
+
+    AsyncStorage.getItem('currentUser')
+    .then((currentUser) => this.setState({currentUser}))
+    // this.getCurrentUser()
+  }
+
+  // async getCurrentUser() {
+  //   try {
+  //     const currentUser = await AsyncStorage.getItem('currentUser');
+  //     this.setState({currentUser});
+  //   } catch (error) {
+  //     console.log("Error retrieving data" + error);
+  //   }
+  // }
+
+  loginUser = (userObj) => {
+    let currentUser = this.state.users.find(user => user.username === userObj.username)
+    this.setCurrentUser(currentUser)
+  }
+
+  setCurrentUser = (currentUser) => {
+    // try {
+    //   await AsyncStorage.setItem('currentUser', JSON.stringify(currentUser));
+    // } catch (error) {
+    //   console.log("Error saving data" + error);
+    // }
+    AsyncStorage.setItem('currentUser', JSON.stringify(currentUser))
+    this.setState({currentUser})
+    // this.setState({currentUser})
+  }
+
+
+  render() {
+    return (
+      <>
+        <StatusBar barStyle="dark-content" />
+        <SafeAreaView>
+          <ScrollView>
+            <View>
+              <LoginSignUp loginUser={this.loginUser} />
+              <NavBar />
+              {this.state.currentUser ? <UserContainer currentUser={this.state.currentUser} /> : <Text>No user logged in</Text>}
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </>
+    );
+
+  }
+  
+}
 
 export default App;
