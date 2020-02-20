@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.8.0",
     "react": "16.9.0",
+    "react-devtools": "^3.6.3",
     "react-native": "0.61.5"
   },
   "devDependencies": {

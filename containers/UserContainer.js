@@ -5,10 +5,12 @@ import {
     ScrollView,
     View,
     Text,
-    Image
+    Image,
+    Button
   } from 'react-native';
 import SchedulesContainer from './SchedulesContainer'
 import ScheduleShow from './ScheduleShow'
+import CreateScheduleForm from '../components/CreateScheduleForm'
 
 
 class UserContainer extends React.Component {
@@ -16,7 +18,8 @@ class UserContainer extends React.Component {
     state = {
         showSchedule: false,
         schedules: [],
-        selectedSchedule: {} 
+        selectedSchedule: {},
+        addScheduleForm: false 
 
     }
 
@@ -33,11 +36,18 @@ class UserContainer extends React.Component {
 
     }
 
+    addScheduleForm = () => {
+        this.setState({addScheduleForm: !this.state.addScheduleForm})
+    }
+
+
     render() {
         return (
             <View>
                 <Text style={{ fontSize: 25 }} >{this.props.currentUser.username}</Text>
                 <Image style={{height: 100, width: 100 }} source={{uri: this.props.currentUser.image}}/>
+                <Button title={this.state.addScheduleForm ? "Close Form" : "Add Schedule"} onPress={this.addScheduleForm} />
+                {this.state.addScheduleForm && <CreateScheduleForm />}
                 <SchedulesContainer schedules={this.props.currentUser.schedules} viewSchedule={this.viewSchedule} />
                 {this.state.showSchedule && <ScheduleShow schedule={this.state.selectedSchedule} />}
             </View>
