@@ -15,14 +15,12 @@ class LoginSignUp extends React.Component {
         formInput: {
             username: "",
             password: ""
-        },
-        loggedIn: false
+        }
     }
 
     loginHandler = () => {
         let userObj = this.state.formInput
         this.props.loginUser(userObj)
-        this.setState({ loggedIn: !this.state.loggedIn})
     }
 
     render() {
@@ -30,7 +28,7 @@ class LoginSignUp extends React.Component {
             <View>
                 <Text>Login/Sign-up</Text>
                 {
-                    this.state.loggedIn
+                    this.props.loggedIn
                     ?
                     null
                     :

@@ -13,7 +13,7 @@ class SchedulesContainer extends React.Component {
     render() {
         return (
             <View>
-                {this.props.schedules.map(schedule => <ScheduleCard key={schedule.id} {...schedule} viewSchedule={this.props.viewSchedule} />)}
+                {this.props.schedules && this.props.schedules.map(schedule => <ScheduleCard key={schedule.id} {...schedule} viewSchedule={this.props.viewSchedule} />)}
             </View>
         )
     }
