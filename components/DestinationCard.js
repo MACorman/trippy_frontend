@@ -13,7 +13,9 @@ class DestinationCard extends React.Component {
     render() {
         return (
             <View>
-                <Text>{this.props.dest.name}</Text>
+                <Text>{this.props.name}</Text>
+                <Text>{this.props.address}</Text>
+                <Text>Category: {this.props.category}</Text>
             </View>
         )
     }
