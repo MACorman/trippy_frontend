@@ -58,6 +58,10 @@ class App extends React.Component {
     this.setState({currentUser})
   }
 
+  logout = () => {
+    this.setState({currentUser: {}, loggedIn: false})
+  }
+
 
   render() {
     console.log("test")
@@ -68,8 +72,8 @@ class App extends React.Component {
           <ScrollView>
             <View>
               {!this.state.loggedIn && <LoginSignUp loginUser={this.loginUser} loggedIn={this.state.loggedIn} />}
-              <NavBar />
-              {this.state.currentUser ? <UserContainer currentUser={this.state.currentUser} /> : <Text>No user logged in</Text>}
+              {this.state.loggedIn && <NavBar logout={this.logout} />}
+              {this.state.currentUser ? <UserContainer currentUser={this.state.currentUser} cuschedules={this.state.currentUser.schedules} /> : <Text>No user logged in</Text>}
             </View>
           </ScrollView>
         </SafeAreaView>
