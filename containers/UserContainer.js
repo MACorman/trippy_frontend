@@ -25,6 +25,10 @@ class UserContainer extends React.Component {
         lat: "",
         long: "", 
         apiResults: [],
+        userSchedules: [],
+        newScheduleInput: {}
+        // currentUserSchedules: []
+        // newUserScheduleLoaded: false
 
     }
 
@@ -32,6 +36,12 @@ class UserContainer extends React.Component {
         fetch("http://localhost:3000/schedules")
         .then(resp => resp.json())
         .then(schedules => this.setState({ schedules }))
+
+        fetch("http://localhost:3000/user_schedules")
+        .then(resp => resp.json())
+        .then(userSchedules => this.setState({ userSchedules }))
+
+        // this.setState({currentUserSchedules: this.props.cuschedules})
     }
 
     viewSchedule = (id) => {
@@ -46,11 +56,61 @@ class UserContainer extends React.Component {
     }
 
     formInputHandler = (inputObj) => {
+        // this.setState({newUserScheduleLoaded: false})
+        this.setState({addScheduleForm: false})
+        this.setState({newScheduleInput: inputObj})
         let attractionName = inputObj.mustSee
         attractionName = attractionName.toLowerCase().split(' ').join('%20')
         let category = inputObj.category
         this.getDestinationCoords(attractionName, category)
+
+        fetch("http://localhost:3000/schedules", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                name: inputObj.name,
+                location: inputObj.location
+            })
+        })
+        .then(resp => resp.json())
+        .then(schedule => {
+            // this.setState({newSchedule: schedule})
+            let updatedSchedulesArr = [...this.state.schedules, schedule] 
+            this.setState({schedules: updatedSchedulesArr}, () => this.createUserSchedule(schedule.id))
+        })
     }
+
+    createUserSchedule = (id) => {
+        fetch("http://localhost:3000/user_schedules", {
+                method: "POST", 
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: this.props.currentUser.id,
+                    schedule_id: parseInt(id)
+                })
+            })
+            .then(resp => resp.json())
+            .then(userSchedule => {
+                let updatedUserSchedulesArr = [...this.state.userSchedules, userSchedule]
+                // let updatedSchedulesArr = [...this.state.schedules, schedule] 
+                this.setState({userSchedules: updatedUserSchedulesArr})
+            
+            
+                // this.setState({schedules: updatedSchedulesArr})
+                // let updatedCurrentUserSchedulesArr = [...this.state.currentUserSchedules, schedule]
+                // this.setState({currentUserSchedules: updatedCurrentUserSchedulesArr})
+                
+            })
+    }
+
+    
+    
 
     getDestinationCoords = (attractionName, category) => {
         fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${attractionName}&inputtype=textquery&fields=formatted_address,name,geometry&key=${API_KEY}`)
@@ -79,9 +139,9 @@ class UserContainer extends React.Component {
                 <Image style={{height: 100, width: 100 }} source={{uri: this.props.currentUser.image}}/>
                 <Button title={this.state.addScheduleForm ? "Close Form" : "Add Schedule"} onPress={this.addScheduleForm} />
                 {this.state.addScheduleForm && <CreateScheduleForm formInputHandler={this.formInputHandler} />}
-                <SchedulesContainer schedules={this.props.currentUser.schedules} viewSchedule={this.viewSchedule} />
+                <SchedulesContainer userSchedules={this.state.userSchedules} schedules={this.state.schedules} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} />
                 {this.state.showSchedule && <ScheduleShow schedule={this.state.selectedSchedule} />}
-                {this.state.apiResults && <ScheduleResults results={this.state.apiResults} />}
+                {this.state.apiResults && <ScheduleResults newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} />}
             </View>
         )
     }

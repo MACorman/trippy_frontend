@@ -29,11 +29,11 @@ class CreateScheduleForm extends React.Component {
     render() {
         return(
             <View>
-                <TextInput placeholder="Name" onChangeText={(text) => this.setState({name: text})}
+                <TextInput placeholder="Schedule Name" onChangeText={(text) => this.setState({name: text})}
                 value={this.state.name}/>
-                <TextInput placeholder="Location" onChangeText={(text) => this.setState({location: text})}
+                <TextInput placeholder="Vaction Location" onChangeText={(text) => this.setState({location: text})}
                 value={this.state.location}/>
-                <TextInput placeholder="Must See Destination Address" onChangeText={(text) => this.setState({mustSee: text})}
+                <TextInput placeholder="Must See Destination" onChangeText={(text) => this.setState({mustSee: text})}
                 value={this.state.mustSee}/>
                 <Picker selectedValue={this.state.category} onValueChange={(itemValue) =>
                     this.setState({category: itemValue})}>

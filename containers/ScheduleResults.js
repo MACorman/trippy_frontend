@@ -14,7 +14,9 @@ class ScheduleResults extends React.Component {
     render() {
         return (
             <View>
-                <Text>Schedule Results</Text>
+                <Text>{this.props.newScheduleInput.name}</Text>
+                <Text>Location: {this.props.newScheduleInput.location}</Text>
+                <Text>{this.props.newScheduleInput.category.charAt(0).toUpperCase() + this.props.newScheduleInput.category.slice(1)} results based on {this.props.newScheduleInput.mustSee}</Text>
                 {this.props.results.map(result => <DestinationResultsCard key={result.id} {...result} />)}
             </View>
         )
