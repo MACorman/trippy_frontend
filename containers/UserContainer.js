@@ -24,7 +24,7 @@ class UserContainer extends React.Component {
         addScheduleForm: false,
         lat: "",
         long: "", 
-        apiResults: []
+        apiResults: [],
 
     }
 
@@ -45,20 +45,27 @@ class UserContainer extends React.Component {
         this.setState({addScheduleForm: !this.state.addScheduleForm})
     }
 
-    getDestinationCoords = () => {
-        fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=1000+5th+Ave,+New+York,+NY+10028&key=${API_KEY}`)
+    formInputHandler = (inputObj) => {
+        let attractionName = inputObj.mustSee
+        attractionName = attractionName.toLowerCase().split(' ').join('%20')
+        let category = inputObj.category
+        this.getDestinationCoords(attractionName, category)
+    }
+
+    getDestinationCoords = (attractionName, category) => {
+        fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${attractionName}&inputtype=textquery&fields=formatted_address,name,geometry&key=${API_KEY}`)
         .then(resp => resp.json())
         .then(data => {
-            let lat = data.results[0].geometry.location.lat
-            let long = data.results[0].geometry.location.lng
-            this.setState({lat, long}, () => this.getDestinationResults())  
+            let lat = data.candidates[0].geometry.location.lat
+            let long = data.candidates[0].geometry.location.lng
+            this.setState({lat, long}, () => this.getDestinationResults(category))  
         })
         .catch(err => console.error(err))
         
     }
 
-    getDestinationResults = () => {
-        fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.lat},${this.state.long}&radius=500&type=restaurant&key=${API_KEY}`)
+    getDestinationResults = (category) => {
+        fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.lat},${this.state.long}&radius=1600&type=${category}&key=${API_KEY}`)
         .then(resp => resp.json())
         .then(data => this.setState({apiResults: data.results}))
         .catch(err => console.error(err))
@@ -71,7 +78,7 @@ class UserContainer extends React.Component {
                 <Text style={{ fontSize: 25 }} >{this.props.currentUser.username}</Text>
                 <Image style={{height: 100, width: 100 }} source={{uri: this.props.currentUser.image}}/>
                 <Button title={this.state.addScheduleForm ? "Close Form" : "Add Schedule"} onPress={this.addScheduleForm} />
-                {this.state.addScheduleForm && <CreateScheduleForm getDestinationCoords={this.getDestinationCoords} />}
+                {this.state.addScheduleForm && <CreateScheduleForm formInputHandler={this.formInputHandler} />}
                 <SchedulesContainer schedules={this.props.currentUser.schedules} viewSchedule={this.viewSchedule} />
                 {this.state.showSchedule && <ScheduleShow schedule={this.state.selectedSchedule} />}
                 {this.state.apiResults && <ScheduleResults results={this.state.apiResults} />}
@@ -81,5 +88,3 @@ class UserContainer extends React.Component {
 }
 
 export default UserContainer
-
-// `https://cors-anywhere.herokuapp.com/` + 
