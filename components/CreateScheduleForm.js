@@ -65,3 +65,7 @@ class CreateScheduleForm extends React.Component {
 }
 
 export default CreateScheduleForm
+
+
+
+//on button press navigate to schedule results

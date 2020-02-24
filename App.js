@@ -6,12 +6,18 @@ import {
   ScrollView,
   View,
   Text,
-  StatusBar
+  StatusBar,
+  Button
 } from 'react-native'
 import UserContainer from './containers/UserContainer'
 import NavBar from './containers/NavBar'
 import LoginSignUp from './components/LoginSignUp'
 import AsyncStorage from '@react-native-community/async-storage'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack';
+import Logout from './components/Logout'
+
+const Stack = createStackNavigator()
 
 class App extends React.Component {
 
@@ -62,22 +68,28 @@ class App extends React.Component {
     this.setState({currentUser: {}, loggedIn: false})
   }
 
+  // might just do away with nav bar and put the logout as a button in the profile header
 
   render() {
     console.log("test")
     return (
-      <>
-        <StatusBar barStyle="dark-content" />
-        <SafeAreaView>
-          <ScrollView>
-            <View>
-              {!this.state.loggedIn && <LoginSignUp loginUser={this.loginUser} loggedIn={this.state.loggedIn} />}
-              {this.state.loggedIn && <NavBar logout={this.logout} />}
-              {this.state.currentUser ? <UserContainer currentUser={this.state.currentUser} cuschedules={this.state.currentUser.schedules} /> : <Text>No user logged in</Text>}
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-      </>
+      <NavigationContainer>
+        <Stack.Navigator>  
+                {!this.state.loggedIn && 
+                <Stack.Screen name="Login or Signup"
+                  component={props => <LoginSignUp {...props} loginUser={this.loginUser} loggedIn={this.state.loggedIn}/>}
+                />}
+                {this.state.loggedIn && 
+                <Stack.Screen name="User Profile"
+                  component={props => <UserContainer {...props} currentUser={this.state.currentUser} cuschedules={this.state.currentUser.schedules} />}
+                  options={{headerRight:
+                      () => (
+                        <Button title="logout" onPress={() => this.logout()}/> 
+                      )
+                    }}
+                />}    
+        </Stack.Navigator>
+      </NavigationContainer>
     );
 
   }
@@ -85,3 +97,19 @@ class App extends React.Component {
 }
 
 export default App;
+
+{/* {!this.state.loggedIn && 
+                <Stack.Screen name="Login or Signup">
+                  {props => <LoginSignUp {...props} loginUser={this.loginUser} loggedIn={this.state.loggedIn} />}
+                </Stack.Screen>} */}
+
+
+{/* {this.state.currentUser ? 
+  <Stack.Screen name="User Container">
+    {props => <UserContainer {...props} currentUser={this.state.currentUser} cuschedules={this.state.currentUser.schedules} />}
+  </Stack.Screen>
+  :
+  <Stack.Screen name="No user logged in">
+    <Text>No user logged in</Text>
+  </Stack.Screen>} */}
+

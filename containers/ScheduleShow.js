@@ -17,6 +17,7 @@ class ScheduleShow extends React.Component {
                 <Text>{this.props.schedule.name}</Text>
                 <Text>Location: {this.props.schedule.location}</Text>
                 {this.props.schedule.destinations.map(destination => <DestinationCard key={destination.id} {...destination} />)}
+                <Button title="Hide Schedule" onPress={this.props.hideSchedule} />
             </View>
         )
     }

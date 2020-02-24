@@ -26,7 +26,6 @@ class LoginSignUp extends React.Component {
     render() {
         return (
             <View>
-                <Text>Login/Sign-up</Text>
                 {
                     this.props.loggedIn
                     ?
