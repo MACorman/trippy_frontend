@@ -25,9 +25,6 @@ class App extends React.Component {
     fetch("http://localhost:3000/users")
     .then(resp => resp.json())
     .then(users => this.setState({ users }))
-
-    // AsyncStorage.getItem('currentUser')
-    // .then((currentUser) => this.setState({currentUser: JSON.parse(currentUser)}))
     this.getCurrentUser()
   }
 
@@ -35,7 +32,6 @@ class App extends React.Component {
     try {
       const currentUser = await AsyncStorage.getItem('currentUser');
       this.setState({currentUser: JSON.parse(currentUser), loggedIn: true});
-      // if asyncstorage can be null, can't hardcode true
     } catch (error) {
       console.log("Error retrieving data" + error);
     }
@@ -53,13 +49,56 @@ class App extends React.Component {
     } catch (error) {
       console.log("Error saving data" + error);
     }
-    // AsyncStorage.setItem('currentUser', JSON.stringify(currentUser))
-    // this.setState({currentUser})
     this.setState({currentUser})
   }
 
   logout = () => {
     this.setState({currentUser: {}, loggedIn: false})
+  }
+
+  createUser = (userObj) => {
+    let username = userObj.username
+    let password = userObj.password
+    let image = "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg"
+    let newUser = {username, password, image}
+
+    fetch("http://localhost:3000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accepts": "application/json"
+      },
+      body: JSON.stringify(newUser)
+    })
+    .then(resp => resp.json())
+    .then(user => {
+      let currentUser = user
+      let updatedUsersArr = [...this.state.users, user]
+      this.setState({users: updatedUsersArr})
+      this.setState({loggedIn: !this.state.loggedIn})
+      this.setCurrentUser(currentUser)
+    })
+  }
+
+  editCurrentUser = (editedUserObj) => {
+    fetch(`http://localhost:3000/users/${this.state.currentUser.id}`, {
+      method: "PATCH", 
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({username: editedUserObj.username, image: editedUserObj.image})
+    })
+    .then(resp => resp.json())
+    .then(user => {
+      let updatedUsers = this.state.users.map(u => {
+        if(u.id === user.id) {
+          return user
+        }
+        return u
+      })
+      this.setState({users: updatedUsers, currentUser: user})
+    })
   }
 
 
@@ -71,9 +110,9 @@ class App extends React.Component {
         <SafeAreaView>
           <ScrollView>
             <View>
-              {!this.state.loggedIn && <LoginSignUp loginUser={this.loginUser} loggedIn={this.state.loggedIn} />}
+              {!this.state.loggedIn && <LoginSignUp loginUser={this.loginUser} loggedIn={this.state.loggedIn} createUser={this.createUser} />}
               {this.state.loggedIn && <NavBar logout={this.logout} />}
-              {this.state.currentUser ? <UserContainer currentUser={this.state.currentUser} cuschedules={this.state.currentUser.schedules} /> : <Text>No user logged in</Text>}
+              {this.state.currentUser ? <UserContainer currentUser={this.state.currentUser} cuschedules={this.state.currentUser.schedules} editCurrentUser={this.editCurrentUser} /> : <Text>No user logged in</Text>}
             </View>
           </ScrollView>
         </SafeAreaView>

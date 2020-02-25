@@ -12,7 +12,7 @@ class NavBar extends React.Component {
     render() {
         return (
             <View>
-                <Text>Nav Bar</Text>
+                <Text style={{fontSize: 35}}>Trippin</Text>
                 <Logout logout={this.props.logout} />
             </View>
         )
