@@ -12,15 +12,26 @@ import {
 class LoginSignUp extends React.Component {
 
     state = {
+        showSignUp: false,
         formInput: {
             username: "",
-            password: ""
+            password: "",
+            passwordConfirmation: ""
         }
     }
 
     loginHandler = () => {
         let userObj = this.state.formInput
         this.props.loginUser(userObj)
+    }
+
+    signupHandler = () => {
+        this.setState({showSignUp: true})
+    }
+
+    createAccountHandler = () => {
+        let userObj = this.state.formInput
+        this.props.createUser(userObj)
     }
 
     render() {
@@ -37,7 +48,10 @@ class LoginSignUp extends React.Component {
                             value={this.state.formInput.username}/>
                         <TextInput placeholder="Password" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, password: text}})}
                             value={this.state.formInput.password}/>
-                        <Button title="login" onPress={this.loginHandler} />
+                        {this.state.showSignUp && <TextInput placeholder="Password Confirmation" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, passwordConfirmation: text}})}
+                            value={this.state.formInput.passwordConfirmation}/>}
+                        {!this.state.showSignUp && <Button title="Login" onPress={this.loginHandler} />}
+                        {this.state.showSignUp ? <Button title="Create Account" onPress={this.createAccountHandler} /> : <Button title="Signup" onPress={this.signupHandler} />}
                     </View>
 
                 }

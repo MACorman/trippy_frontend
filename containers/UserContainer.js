@@ -6,13 +6,16 @@ import {
     View,
     Text,
     Image,
-    Button
+    Button,
+    WebView
   } from 'react-native';
 import SchedulesContainer from './SchedulesContainer'
 import ScheduleShow from './ScheduleShow'
 import CreateScheduleForm from '../components/CreateScheduleForm'
 import ScheduleResults from './ScheduleResults'
 import { API_KEY } from 'react-native-dotenv'
+import AddDestinationForm from '../components/AddDestinationForm';
+import EditProfileForm from '../components/EditProfileForm';
 
 
 class UserContainer extends React.Component {
@@ -29,13 +32,9 @@ class UserContainer extends React.Component {
         newScheduleInput: {},
         newSchedule: {},
         destinationSchedules: [],
-        selectedScheduleDestinations: []
-        // selectedDestinationSchedule: {}
-        // startCreateDestination: false
-
-        // currentUserSchedules: []
-        // newUserScheduleLoaded: false
-
+        selectedScheduleDestinations: [],
+        showAddDestinationToSchedule: false,
+        showEditProfile: false
     }
 
     componentDidMount() {
@@ -50,13 +49,12 @@ class UserContainer extends React.Component {
         fetch("http://localhost:3000/destination_schedules")
         .then(resp => resp.json())
         .then(destinationSchedules => this.setState({ destinationSchedules }))
-
-        // this.setState({currentUserSchedules: this.props.cuschedules})
     }
 
     viewSchedule = (id) => {
         let selectedSchedule = this.state.schedules.find(schedule => schedule.id === parseInt(id))
-        this.setState({ selectedSchedule })
+        let selectedScheduleDestinations = selectedSchedule.destinations
+        this.setState({ selectedSchedule, selectedScheduleDestinations })
         this.setState({showSchedule: !this.state.showSchedule})
 
     }
@@ -66,7 +64,6 @@ class UserContainer extends React.Component {
     }
 
     formInputHandler = (inputObj) => {
-        // this.setState({newUserScheduleLoaded: false})
         this.setState({addScheduleForm: false})
         this.setState({newScheduleInput: inputObj})
         let attractionName = inputObj.mustSee
@@ -87,9 +84,8 @@ class UserContainer extends React.Component {
         })
         .then(resp => resp.json())
         .then(schedule => {
-            // this.setState({newSchedule: schedule})
             let updatedSchedulesArr = [...this.state.schedules, schedule] 
-            this.setState({schedules: updatedSchedulesArr, newSchedule: schedule}, () => this.createUserSchedule(schedule.id))
+            this.setState({schedules: updatedSchedulesArr, selectedSchedule: schedule}, () => this.createUserSchedule(schedule.id))
         })
     }
 
@@ -108,19 +104,10 @@ class UserContainer extends React.Component {
             .then(resp => resp.json())
             .then(userSchedule => {
                 let updatedUserSchedulesArr = [...this.state.userSchedules, userSchedule]
-                // let updatedSchedulesArr = [...this.state.schedules, schedule] 
                 this.setState({userSchedules: updatedUserSchedulesArr})
-            
-            
-                // this.setState({schedules: updatedSchedulesArr})
-                // let updatedCurrentUserSchedulesArr = [...this.state.currentUserSchedules, schedule]
-                // this.setState({currentUserSchedules: updatedCurrentUserSchedulesArr})
-                
             })
     }
 
-    
-    
 
     getDestinationCoords = (attractionName, category) => {
         fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${attractionName}&inputtype=textquery&fields=formatted_address,name,geometry&key=${API_KEY}`)
@@ -131,6 +118,7 @@ class UserContainer extends React.Component {
             this.setState({lat, long}, () => this.getDestinationResults(category))  
         })
         .catch(err => console.error(err))
+
         
     }
 
@@ -142,7 +130,6 @@ class UserContainer extends React.Component {
     }
 
     createDestination = (newDestObj) => {
-        this.setState({startCreateDestination: true})
         fetch("http://localhost:3000/destinations", {
             method: "POST", 
             headers: {
@@ -161,7 +148,7 @@ class UserContainer extends React.Component {
                 },
                 body: JSON.stringify({
                     destination_id: destination.id,
-                    schedule_id: this.state.newSchedule.id
+                    schedule_id: this.state.selectedSchedule.id
                 })
             })
             .then(resp => resp.json())
@@ -196,38 +183,54 @@ class UserContainer extends React.Component {
     }
 
     deleteDestinationSchedule = (destinationId, scheduleId) => {
-        // let updatedDestinations = [...this.state.selectedSchedule.destinations]
-        // updatedDestinations = updatedDestinations.filter(d => d.id !== parseInt(destinationId))
-        
         let selectedScheduleDestinationsCopy = [...this.state.selectedScheduleDestinations]
         selectedScheduleDestinationsCopy = selectedScheduleDestinationsCopy.filter(dest => dest.id !== parseInt(destinationId))
-        let selectedDestinationSchedule = this.state.destinationSchedules.find(ds => ds.destination_id === parseInt(destinationId) && ds.schedule_id === parseInt(scheduleId))
-        // this.setState({selectedDestinationSchedule})
-        let updatedDestinationSchedules = [...this.state.destinationSchedules]
-        updatedDestinationSchedules = updatedDestinationSchedules.filter(ds => ds.id !== selectedDestinationSchedule.id)
-        this.setState({destinationSchedules: updatedDestinationSchedules, selectedScheduleDestinations: selectedScheduleDestinationsCopy})
+        this.setState({selectedScheduleDestinations: selectedScheduleDestinationsCopy})
 
+        let selectedDestinationSchedule = this.state.destinationSchedules.find(ds => ds.destination_id === parseInt(destinationId) && ds.schedule_id === parseInt(scheduleId))
         fetch(`http://localhost:3000/destination_schedules/${selectedDestinationSchedule.id}`, {
             method: "DELETE"
         })
         .then(resp => resp.json())
         .then(console.log)
-
-        //delete is working on the backend but frontend does not update until you refresh
         
     }
 
+    showAddDestination = () => {
+        this.setState({showAddDestinationToSchedule: true})
+    }
+
+    addDestinationInputHandler = (inputObj) => {
+        this.setState({showAddDestinationToSchedule: false})
+        this.setState({newScheduleInput: inputObj})
+        let attractionName = inputObj.mustSee
+        attractionName = attractionName.toLowerCase().split(' ').join('%20')
+        let category = inputObj.category
+        this.getDestinationCoords(attractionName, category)
+
+    }
+
+    editProfileHandler = () => {
+        this.setState({showEditProfile: true})
+    }
+
+    editUser = (editedUserObj) => {
+        this.setState({showEditProfile: false})
+        this.props.editCurrentUser(editedUserObj)
+    }
 
     render() {
         return (
             <View>
-                <Text style={{ fontSize: 25 }} >{this.props.currentUser.username}</Text>
+                <Text style={{ fontSize: 23 }} >{this.props.currentUser.username}</Text>
                 <Image style={{height: 100, width: 100 }} source={{uri: this.props.currentUser.image}}/>
+                {this.state.showEditProfile ? <EditProfileForm currentUser={this.props.currentUser} editUser={this.editUser} /> : <Button title="Edit Profile" onPress={this.editProfileHandler} />}
                 <Button title={this.state.addScheduleForm ? "Close Form" : "Add Schedule"} onPress={this.addScheduleForm} />
                 {this.state.addScheduleForm && <CreateScheduleForm formInputHandler={this.formInputHandler} />}
                 <SchedulesContainer userSchedules={this.state.userSchedules} schedules={this.state.schedules} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} />
-                {this.state.showSchedule && <ScheduleShow schedule={this.state.selectedSchedule} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} />}
+                {this.state.showSchedule && <ScheduleShow schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} />}
                 {this.state.apiResults && <ScheduleResults createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} />}
+                {this.state.showAddDestinationToSchedule && <AddDestinationForm schedule={this.state.selectedSchedule} addDestinationInputHandler={this.addDestinationInputHandler} />}
             </View>
         )
     }
