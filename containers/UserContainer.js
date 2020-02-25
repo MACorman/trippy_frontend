@@ -6,8 +6,7 @@ import {
     View,
     Text,
     Image,
-    Button,
-    WebView
+    Button
   } from 'react-native';
 import SchedulesContainer from './SchedulesContainer'
 import ScheduleShow from './ScheduleShow'
@@ -16,6 +15,12 @@ import ScheduleResults from './ScheduleResults'
 import { API_KEY } from 'react-native-dotenv'
 import AddDestinationForm from '../components/AddDestinationForm';
 import EditProfileForm from '../components/EditProfileForm';
+import Profile from './Profile'
+import { createStackNavigator } from '@react-navigation/stack'
+import { createDrawerNavigator } from '@react-navigation/drawer'
+
+const Stack = createStackNavigator()
+const Drawer = createDrawerNavigator()
 
 
 class UserContainer extends React.Component {
@@ -220,18 +225,41 @@ class UserContainer extends React.Component {
     }
 
     render() {
+
+        // let createProfileStack = () => 
+        // <Stack.Navigator>
+        //     <Stack.Screen name="Schedules">
+        //         {props => <SchedulesContainer {...props} userSchedules={this.state.userSchedules} schedules={this.state.schedules} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} />}
+        //     </Stack.Screen>
+        //     <Stack.Screen name="Schedule Show">
+        //         {props => <ScheduleShow {...props} schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} />}
+        //     </Stack.Screen>
+        // </Stack.Navigator>
+
         return (
-            <View>
-                <Text style={{ fontSize: 23 }} >{this.props.currentUser.username}</Text>
-                <Image style={{height: 100, width: 100 }} source={{uri: this.props.currentUser.image}}/>
-                {this.state.showEditProfile ? <EditProfileForm currentUser={this.props.currentUser} editUser={this.editUser} /> : <Button title="Edit Profile" onPress={this.editProfileHandler} />}
-                <Button title={this.state.addScheduleForm ? "Close Form" : "Add Schedule"} onPress={this.addScheduleForm} />
-                {this.state.addScheduleForm && <CreateScheduleForm formInputHandler={this.formInputHandler} />}
-                <SchedulesContainer userSchedules={this.state.userSchedules} schedules={this.state.schedules} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} />
-                {this.state.showSchedule && <ScheduleShow schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} />}
-                {this.state.apiResults && <ScheduleResults createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} />}
-                {this.state.showAddDestinationToSchedule && <AddDestinationForm schedule={this.state.selectedSchedule} addDestinationInputHandler={this.addDestinationInputHandler} />}
-            </View>
+            <Drawer.Navigator>
+                <Drawer.Screen name="Profile" >
+                    {props => <Profile {...props} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} schedules={this.state.schedules} userSchedules={this.state.userSchedules} schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} addDestinationInputHandler={this.addDestinationInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} />}
+                </Drawer.Screen>
+                <Drawer.Screen name="Edit Profile">
+                    {props => <EditProfileForm {...props} currentUser={this.props.currentUser} editUser={this.editUser}/>}
+                </Drawer.Screen>
+                <Drawer.Screen name="Add Schedule">
+                    {props => <CreateScheduleForm {...props} formInputHandler={this.formInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults}/>}
+                </Drawer.Screen>
+
+            </Drawer.Navigator>
+
+            // <View>
+            //     <Profile currentUser={this.props.currentUser} />
+            //     {this.state.showEditProfile ? <EditProfileForm currentUser={this.props.currentUser} editUser={this.editUser} /> : <Button title="Edit Profile" onPress={this.editProfileHandler} />}
+            //     <Button title={this.state.addScheduleForm ? "Close Form" : "Add Schedule"} onPress={this.addScheduleForm} />
+            //     {this.state.addScheduleForm && <CreateScheduleForm formInputHandler={this.formInputHandler} />}
+            //     <SchedulesContainer userSchedules={this.state.userSchedules} schedules={this.state.schedules} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} />
+            //     {this.state.showSchedule && <ScheduleShow schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} />}
+            //     {this.state.apiResults && <ScheduleResults createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} />}
+            //     {this.state.showAddDestinationToSchedule && <AddDestinationForm schedule={this.state.selectedSchedule} addDestinationInputHandler={this.addDestinationInputHandler} />}
+            // </View>
         )
     }
 }

@@ -20,6 +20,7 @@ class EditProfileForm extends React.Component {
     editHandler = () => {
         let editedUserObj = this.state
         this.props.editUser(editedUserObj)
+        this.props.navigation.navigate("Profile")
     }
 
     render() {
