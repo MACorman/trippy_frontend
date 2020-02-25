@@ -10,55 +10,68 @@ import {
     TextInput,
     Picker
   } from 'react-native';
+  import ScheduleResults from '../containers/ScheduleResults'
 
 class AddDestinationForm extends React.Component {
 
     state = {
-        name: this.props.schedule.name,
-        location: this.props.schedule.location, 
-        category: "",
-        mustSee: ""
-
+        showResults: false, 
+        formInput: {
+            name: this.props.schedule.name,
+            location: this.props.schedule.location, 
+            category: "",
+            mustSee: ""
+        }
     }
 
     formHandler = () => {
-        let inputObj = this.state
+        let inputObj = this.state.formInput
         this.props.addDestinationInputHandler(inputObj)
+        this.setState({showResults: true})
+        
     }
 
     render() {
         return (
             <View>
-                <TextInput 
-                value={this.state.name}/>
-                <TextInput 
-                value={this.state.location}/>
-                <TextInput placeholder="Must See Destination" onChangeText={(text) => this.setState({mustSee: text})}
-                value={this.state.mustSee}/>
-                <Picker selectedValue={this.state.category} onValueChange={(itemValue) =>
-                    this.setState({category: itemValue})}>
-                    <Picker.Item label="Aquarium" value="aquarium" />
-                    <Picker.Item label="Art Gallery" value="art_gallery" />
-                    <Picker.Item label="Bakery" value="bakery" />
-                    <Picker.Item label="Book Store" value="book_store" />
-                    <Picker.Item label="Cafe" value="cafe" />
-                    <Picker.Item label="Church" value="church" />
-                    <Picker.Item label="Clothing Store" value="clothing_store" />
-                    <Picker.Item label="Library" value="library" />
-                    <Picker.Item label="Movie Theater" value="movie_theater" />
-                    <Picker.Item label="Museum" value="museum" />
-                    <Picker.Item label="Night Club" value="night_club" />
-                    <Picker.Item label="Park" value="park" />
-                    <Picker.Item label="Restaurant" value="restaurant" />
-                    <Picker.Item label="Shoe Store" value="shoe_store" />
-                    <Picker.Item label="Shopping Mall" value="shopping_mall" />
-                    <Picker.Item label="Stadium" value="stadium" />
-                    <Picker.Item label="Supermarket" value="supermarket" />
-                    <Picker.Item label="Tourist Attraction" value="tourist_attraction" />
-                    <Picker.Item label="University" value="university" />
-                    <Picker.Item label="Zoo" value="zoo" /> 
-                </Picker>
-                <Button title="Create New Search" onPress={this.formHandler} />
+                {
+                this.state.showResults 
+                ?
+                <ScheduleResults createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} results={this.props.results} />
+                :
+                <View>
+                    <TextInput 
+                    value={this.state.formInput.name}/>
+                    <TextInput 
+                    value={this.state.formInput.location}/>
+                    <TextInput placeholder="Must See Destination" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, mustSee: text}})}
+                    value={this.state.formInput.mustSee}/>
+                    <Picker selectedValue={this.state.formInput.category} onValueChange={(itemValue) =>
+                        this.setState({formInput: {...this.state.formInput, category: itemValue}})}>
+                        <Picker.Item label="Aquarium" value="aquarium" />
+                        <Picker.Item label="Art Gallery" value="art_gallery" />
+                        <Picker.Item label="Bakery" value="bakery" />
+                        <Picker.Item label="Book Store" value="book_store" />
+                        <Picker.Item label="Cafe" value="cafe" />
+                        <Picker.Item label="Church" value="church" />
+                        <Picker.Item label="Clothing Store" value="clothing_store" />
+                        <Picker.Item label="Library" value="library" />
+                        <Picker.Item label="Movie Theater" value="movie_theater" />
+                        <Picker.Item label="Museum" value="museum" />
+                        <Picker.Item label="Night Club" value="night_club" />
+                        <Picker.Item label="Park" value="park" />
+                        <Picker.Item label="Restaurant" value="restaurant" />
+                        <Picker.Item label="Shoe Store" value="shoe_store" />
+                        <Picker.Item label="Shopping Mall" value="shopping_mall" />
+                        <Picker.Item label="Stadium" value="stadium" />
+                        <Picker.Item label="Supermarket" value="supermarket" />
+                        <Picker.Item label="Tourist Attraction" value="tourist_attraction" />
+                        <Picker.Item label="University" value="university" />
+                        <Picker.Item label="Zoo" value="zoo" /> 
+                    </Picker>
+                    <Button title="Create New Search" onPress={this.formHandler} />
+                </View>
+                }
             </View>
         )
     }

@@ -16,7 +16,7 @@ class SchedulesContainer extends React.Component {
         let currentUserSchedules = currentUserUserSchedules.map(cu => cu.schedule)
         return (
             <View>
-                {this.props.userSchedules && currentUserSchedules.map(schedule => <ScheduleCard key={schedule.id} {...schedule} viewSchedule={this.props.viewSchedule} />)}
+                {this.props.userSchedules && currentUserSchedules.map(schedule => <ScheduleCard key={schedule.id} {...schedule} viewSchedule={this.props.viewSchedule} showSchedule={this.props.showSchedule}/>)}
             </View>
         )
     }

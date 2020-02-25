@@ -17,6 +17,8 @@ class ScheduleCard extends React.Component {
     buttonHandler = () => {
         this.setState({viewScheduleButton: !this.state.viewScheduleButton})
         this.props.viewSchedule(this.props.id)
+        this.props.showSchedule()
+
     }
 
     render() {
