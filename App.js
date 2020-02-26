@@ -15,10 +15,8 @@ import LoginSignUp from './components/LoginSignUp'
 import AsyncStorage from '@react-native-community/async-storage'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-// import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Stack = createStackNavigator()
-// const Drawer = createDrawerNavigator()
 
 class App extends React.Component {
 
@@ -111,27 +109,22 @@ class App extends React.Component {
 
 
   render() {
-    console.log("test")
     return (
       <>
         <NavigationContainer>
           <Stack.Navigator>
-    {!this.state.loggedIn && <Stack.Screen name="Login/SignUp" options={{headerTitle: props => <Text {...props}>Trippin</Text>}}>
+            {!this.state.loggedIn && <Stack.Screen name="Login/SignUp" options={{headerTitle: props => <Text {...props}>Trippin</Text>}}>
               {props => <LoginSignUp {...props} loginUser={this.loginUser} loggedIn={this.state.loggedIn} createUser={this.createUser}/>}
             </Stack.Screen>}
             {this.state.loggedIn && <Stack.Screen name="User Container" options={{headerTitle: props => <Text {...props}>Trippin</Text>, headerRight: () => (<Button title="logout" onPress={() => this.logout()}/> )}}>
               {props => <UserContainer {...props} currentUser={this.state.currentUser} cuschedules={this.state.currentUser.schedules} editCurrentUser={this.editCurrentUser}/>} 
             </Stack.Screen>}
-              {/* {!this.state.loggedIn && <LoginSignUp loginUser={this.loginUser} loggedIn={this.state.loggedIn} createUser={this.createUser} />}
-              {this.state.loggedIn && <NavBar logout={this.logout} />}
-              {this.state.currentUser ? <UserContainer currentUser={this.state.currentUser} cuschedules={this.state.currentUser.schedules} editCurrentUser={this.editCurrentUser} /> : <Text>No user logged in</Text>} */}
-
           </Stack.Navigator>
         </NavigationContainer>
             
       </>
     );
-
+    
   }
   
 }

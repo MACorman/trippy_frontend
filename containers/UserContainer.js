@@ -8,12 +8,12 @@ import {
     Image,
     Button
   } from 'react-native';
-import SchedulesContainer from './SchedulesContainer'
-import ScheduleShow from './ScheduleShow'
+// import SchedulesContainer from './SchedulesContainer'
+// import ScheduleShow from './ScheduleShow'
 import CreateScheduleForm from '../components/CreateScheduleForm'
-import ScheduleResults from './ScheduleResults'
+// import ScheduleResults from './ScheduleResults'
 import { API_KEY } from 'react-native-dotenv'
-import AddDestinationForm from '../components/AddDestinationForm';
+// import AddDestinationForm from '../components/AddDestinationForm';
 import EditProfileForm from '../components/EditProfileForm';
 import Profile from './Profile'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -26,10 +26,10 @@ const Drawer = createDrawerNavigator()
 class UserContainer extends React.Component {
 
     state = {
-        showSchedule: false,
+        // showSchedule: false,
         schedules: [],
         selectedSchedule: {},
-        addScheduleForm: false,
+        // addScheduleForm: false,
         lat: "",
         long: "", 
         apiResults: [],
@@ -38,8 +38,8 @@ class UserContainer extends React.Component {
         newSchedule: {},
         destinationSchedules: [],
         selectedScheduleDestinations: [],
-        showAddDestinationToSchedule: false,
-        showEditProfile: false
+        // showAddDestinationToSchedule: false,
+        // showEditProfile: false
     }
 
     componentDidMount() {
@@ -64,9 +64,9 @@ class UserContainer extends React.Component {
 
     }
 
-    addScheduleForm = () => {
-        this.setState({addScheduleForm: !this.state.addScheduleForm})
-    }
+    // addScheduleForm = () => {
+    //     this.setState({addScheduleForm: !this.state.addScheduleForm})
+    // }
 
     formInputHandler = (inputObj) => {
         this.setState({addScheduleForm: false})
@@ -161,17 +161,18 @@ class UserContainer extends React.Component {
         })
     }
 
-    deleteSchedule = (id) => {
+    deleteSchedule = () => {
         let shortenedSchedulesArr = [...this.state.schedules]
-        shortenedSchedulesArr = shortenedSchedulesArr.filter(schedule => schedule.id !== parseInt(id))
-        this.setState({schedules: shortenedSchedulesArr})
+        shortenedSchedulesArr = shortenedSchedulesArr.filter(schedule => schedule.id !== this.state.selectedSchedule.id)
+        // this.setState({schedules: shortenedSchedulesArr})
 
         let updatedUserSchedules = [...this.state.userSchedules]
-        updatedUserSchedules = updatedUserSchedules.filter(us => us.id !== parseInt(id))
-        this.setState({userSchedules: updatedUserSchedules, showSchedule: false})
+        updatedUserSchedules = updatedUserSchedules.filter(us => us.id !== this.state.selectedSchedule.id)
+        this.setState({userSchedules: updatedUserSchedules, schedules: shortenedSchedulesArr})
+        
 
         let userSchedulesToDelete = [...this.state.userSchedules]
-        userSchedulesToDelete = userSchedulesToDelete.filter(us => us.schedule_id === parseInt(id))
+        userSchedulesToDelete = userSchedulesToDelete.filter(us => us.schedule_id === this.state.selectedSchedule.id)
         userSchedulesToDelete.map(us => {
             fetch(`http://localhost:3000/user_schedules/${us.id}`, {
                 method: "DELETE"
@@ -180,7 +181,7 @@ class UserContainer extends React.Component {
             .then(console.log)
         })
 
-        fetch(`http://localhost:3000/schedules/${id}`, {
+        fetch(`http://localhost:3000/schedules/${this.state.selectedSchedule.id}`, {
             method: "DELETE"
         })
         .then(resp => resp.json())
@@ -201,9 +202,9 @@ class UserContainer extends React.Component {
         
     }
 
-    showAddDestination = () => {
-        this.setState({showAddDestinationToSchedule: true})
-    }
+    // showAddDestination = () => {
+    //     this.setState({showAddDestinationToSchedule: true})
+    // }
 
     addDestinationInputHandler = (inputObj) => {
         this.setState({showAddDestinationToSchedule: false})
@@ -215,27 +216,16 @@ class UserContainer extends React.Component {
 
     }
 
-    editProfileHandler = () => {
-        this.setState({showEditProfile: true})
-    }
+    // editProfileHandler = () => {
+    //     this.setState({showEditProfile: true})
+    // }
 
     editUser = (editedUserObj) => {
-        this.setState({showEditProfile: false})
+        // this.setState({showEditProfile: false})
         this.props.editCurrentUser(editedUserObj)
     }
 
     render() {
-
-        // let createProfileStack = () => 
-        // <Stack.Navigator>
-        //     <Stack.Screen name="Schedules">
-        //         {props => <SchedulesContainer {...props} userSchedules={this.state.userSchedules} schedules={this.state.schedules} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} />}
-        //     </Stack.Screen>
-        //     <Stack.Screen name="Schedule Show">
-        //         {props => <ScheduleShow {...props} schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} />}
-        //     </Stack.Screen>
-        // </Stack.Navigator>
-
         return (
             <Drawer.Navigator>
                 <Drawer.Screen name="Profile" >
@@ -249,17 +239,6 @@ class UserContainer extends React.Component {
                 </Drawer.Screen>
 
             </Drawer.Navigator>
-
-            // <View>
-            //     <Profile currentUser={this.props.currentUser} />
-            //     {this.state.showEditProfile ? <EditProfileForm currentUser={this.props.currentUser} editUser={this.editUser} /> : <Button title="Edit Profile" onPress={this.editProfileHandler} />}
-            //     <Button title={this.state.addScheduleForm ? "Close Form" : "Add Schedule"} onPress={this.addScheduleForm} />
-            //     {this.state.addScheduleForm && <CreateScheduleForm formInputHandler={this.formInputHandler} />}
-            //     <SchedulesContainer userSchedules={this.state.userSchedules} schedules={this.state.schedules} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} />
-            //     {this.state.showSchedule && <ScheduleShow schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} />}
-            //     {this.state.apiResults && <ScheduleResults createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} />}
-            //     {this.state.showAddDestinationToSchedule && <AddDestinationForm schedule={this.state.selectedSchedule} addDestinationInputHandler={this.addDestinationInputHandler} />}
-            // </View>
         )
     }
 }
