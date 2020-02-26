@@ -11,6 +11,7 @@ import {
 import DestinationCard from '../components/DestinationCard'
 import AddDestinationForm from '../components/AddDestinationForm'
 import EditProfileForm from '../components/EditProfileForm';
+import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
 class ScheduleShow extends React.Component {
 
@@ -35,6 +36,19 @@ class ScheduleShow extends React.Component {
                     <Text>{this.props.schedule.name}</Text>
                     <Text>{`Location: ${this.props.schedule.location}`}</Text>
                     <Text>{`Date: ${this.props.schedule.date.slice(5, 7)}/${this.props.schedule.date.slice(8, 10)}/${this.props.schedule.date.slice(0, 4)}`}</Text>
+                    <Calendar
+                        current={'2020-02-26'}
+                        minDate={'2020-02-01'}
+                        maxDate={'2050-12-31'}
+                        monthFormat={'MMMM yyyy'}
+                        firstDay={1}
+                        onPressArrowLeft={substractMonth => substractMonth()}
+                        onPressArrowRight={addMonth => addMonth()}
+                        // markedDates={{
+                        //     '2020-02-27': {selected: true, marked: true, selectedColor: 'blue'}
+                        // }}
+
+                    />
                     {this.props.destinations.map(destination => <DestinationCard key={destination.id} {...destination} scheduleId={this.props.schedule.id} deleteDestinationSchedule={this.props.deleteDestinationSchedule} />)}
                     <Button title="Edit Schedule" onPress={this.editHandler} />
                     <Button title="Delete Schedule" onPress={this.props.deleteSchedule}/>
