@@ -34,7 +34,7 @@ class ScheduleShow extends React.Component {
                 <View>
                     <Text>{this.props.schedule.name}</Text>
                     <Text>{`Location: ${this.props.schedule.location}`}</Text>
-                    <Text>Date: {this.props.schedule.date.slice(0, 10)}</Text>
+                    <Text>{`Date: ${this.props.schedule.date.slice(5, 7)}/${this.props.schedule.date.slice(8, 10)}/${this.props.schedule.date.slice(0, 4)}`}</Text>
                     {this.props.destinations.map(destination => <DestinationCard key={destination.id} {...destination} scheduleId={this.props.schedule.id} deleteDestinationSchedule={this.props.deleteDestinationSchedule} />)}
                     <Button title="Edit Schedule" onPress={this.editHandler} />
                     <Button title="Delete Schedule" onPress={this.props.deleteSchedule}/>

@@ -84,7 +84,8 @@ class UserContainer extends React.Component {
             },
             body: JSON.stringify({
                 name: inputObj.name,
-                location: inputObj.location
+                location: inputObj.location,
+                date: inputObj.date.toISOString()
             })
         })
         .then(resp => resp.json())

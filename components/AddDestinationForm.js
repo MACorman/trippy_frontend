@@ -20,7 +20,8 @@ class AddDestinationForm extends React.Component {
             name: this.props.schedule.name,
             location: this.props.schedule.location, 
             category: "",
-            mustSee: ""
+            mustSee: "", 
+            date: this.props.schedule.date
         }
     }
 
@@ -44,6 +45,8 @@ class AddDestinationForm extends React.Component {
                     value={this.state.formInput.name}/>
                     <TextInput 
                     value={this.state.formInput.location}/>
+                    <TextInput 
+                    value={`Date: ${this.state.formInput.date.slice(5, 7)}/${this.state.formInput.date.slice(8, 10)}/${this.state.formInput.date.slice(0, 4)}`} />
                     <TextInput placeholder="Must See Destination" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, mustSee: text}})}
                     value={this.state.formInput.mustSee}/>
                     <Picker selectedValue={this.state.formInput.category} onValueChange={(itemValue) =>

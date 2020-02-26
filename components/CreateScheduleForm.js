@@ -22,10 +22,10 @@ class CreateScheduleForm extends React.Component {
             name: "",
             location: "", 
             category: "",
-            mustSee: ""
+            mustSee: "",
+            date: ""
         },
-        isDatePickerVisible: false,
-        date: ""
+        isDatePickerVisible: false
     }
 
     formHandler = () => {
@@ -44,7 +44,8 @@ class CreateScheduleForm extends React.Component {
     }
 
     handleConfirm = (date) => {
-        this.setState({date})
+        // debugger
+        this.setState({formInput: {...this.state.formInput, date: date}})
         this.setState({isDatePickerVisible: false})
     }
 

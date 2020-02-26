@@ -22,11 +22,12 @@ class ScheduleCard extends React.Component {
     }
 
     render() {
+        
         return (
             <View>
                 <Text style={{ fontSize: 15 }}>{this.props.name}</Text>
                 <Text>{`Location: ${this.props.location}`}</Text>
-                <Text>Date: {this.props.date.slice(0, 10)}</Text>
+                <Text>{`Date: ${this.props.date.slice(5, 7)}/${this.props.date.slice(8, 10)}/${this.props.date.slice(0, 4)}`}</Text>
                 <Button title={this.state.viewScheduleButton ? "View Schedule" : "Hide Schedule" } onPress={this.buttonHandler}/>
 
             </View>
