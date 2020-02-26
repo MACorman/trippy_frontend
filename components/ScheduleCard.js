@@ -26,6 +26,7 @@ class ScheduleCard extends React.Component {
             <View>
                 <Text style={{ fontSize: 15 }}>{this.props.name}</Text>
                 <Text>{`Location: ${this.props.location}`}</Text>
+                <Text>Date: {this.props.date.slice(0, 10)}</Text>
                 <Button title={this.state.viewScheduleButton ? "View Schedule" : "Hide Schedule" } onPress={this.buttonHandler}/>
 
             </View>
