@@ -89,8 +89,6 @@ class CreateScheduleForm extends React.Component {
                                 <Picker.Item label="University" value="university" />
                                 <Picker.Item label="Zoo" value="zoo" /> 
                             </Picker>
-                            <Button title="Create Schedule" onPress={this.formHandler} />
-                    
                             <Button title="Show Date Picker" onPress={this.showDatePicker} />
                             <DateTimePickerModal
                                 isVisible={this.state.isDatePickerVisible}
@@ -98,6 +96,8 @@ class CreateScheduleForm extends React.Component {
                                 onConfirm={this.handleConfirm}
                                 onCancel={this.hideDatePicker}
                             />
+                            <Button title="Create Schedule" onPress={this.formHandler} />
+                    
     
                         </View>
                         }
