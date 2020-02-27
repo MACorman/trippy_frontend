@@ -24,6 +24,11 @@ class ScheduleShow extends React.Component {
         this.setState({showEditForm: false})
     }
 
+    deleteHandler = () => {
+        this.props.deleteSchedule()
+        this.props.afterDelete()
+    }
+
 
     render() {
         return (
@@ -35,9 +40,9 @@ class ScheduleShow extends React.Component {
                 <View>
                     <Text>{this.props.schedule.name}</Text>
                     <Text>{`Location: ${this.props.schedule.location}`}</Text>
-                    <Agenda destinations={this.props.schedule.destinations} date={this.props.schedule.date} scheduleId={this.props.schedule.id} deleteDestinationSchedule={this.props.deleteDestinationSchedule}/>
+                    <Agenda destinations={this.props.destinations} date={this.props.schedule.date} scheduleId={this.props.schedule.id} deleteDestinationSchedule={this.props.deleteDestinationSchedule}/>
                     <Button title="Edit Schedule" onPress={this.editHandler} />
-                    <Button title="Delete Schedule" onPress={this.props.deleteSchedule}/>
+                    <Button title="Delete Schedule" onPress={this.deleteHandler}/>
                 </View>
                 }
             </View>
