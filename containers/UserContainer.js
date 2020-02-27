@@ -21,6 +21,7 @@ class UserContainer extends React.Component {
         newSchedule: {},
         destinationSchedules: [],
         selectedScheduleDestinations: [],
+        desinations: []
     }
 
     componentDidMount() {
@@ -35,6 +36,10 @@ class UserContainer extends React.Component {
         fetch("http://localhost:3000/destination_schedules")
         .then(resp => resp.json())
         .then(destinationSchedules => this.setState({ destinationSchedules }))
+
+        fetch("http://localhost:3000/destinations")
+        .then(resp => resp.json())
+        .then(destinations => this.setState({ destinations }))
     }
 
     viewSchedule = (id) => {
@@ -135,7 +140,11 @@ class UserContainer extends React.Component {
                 })
             })
             .then(resp => resp.json())
-            .then(console.log)
+            .then(ds => {
+                let updatedDestinations = [...this.state.destinations, destination]
+                let updatedSelectedScheduleDestinations = [...this.state.selectedScheduleDestinations, destination]
+                this.setState({selectedScheduleDestinations: updatedSelectedScheduleDestinations, destinations: updatedDestinations})
+            })
         })
     }
 

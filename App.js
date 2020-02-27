@@ -97,7 +97,7 @@ class App extends React.Component {
         }
         return u
       })
-      this.setState({users: updatedUsers, currentUser: user})
+      this.setState({users: updatedUsers, currentUser: user}, () => this.setCurrentUser(user))
     })
   }
 
