@@ -25,9 +25,11 @@ class Profile extends React.Component {
         return(
             <SafeAreaView>
                 <ScrollView>
-                    <View>
-                        <Text style={{ fontSize: 23 }} >{this.props.currentUser.username}</Text>
-                        <Image style={{height: 100, width: 100 }} source={{uri: this.props.currentUser.image}}/>
+                    <View style={{marginLeft: 20, marginRight: 20, paddingTop: 20}}>
+                        <View style={{ paddingBottom: 20}}>
+                            <Image style={{height: 100, width: 100 , borderRadius: 50}} source={{uri: this.props.currentUser.image}}/>
+                            <Text style={{ fontSize: 23}} >{this.props.currentUser.username}</Text>
+                        </View>
                         {!this.state.showSchedule ? 
                         <SchedulesContainer userSchedules={this.props.userSchedules} schedules={this.props.schedules} currentUser={this.props.currentUser} viewSchedule={this.props.viewSchedule} showSchedule={this.showSchedule}/>
                         :
