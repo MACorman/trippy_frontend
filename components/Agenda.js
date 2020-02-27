@@ -1,39 +1,32 @@
 import React from 'react'
 import {
-    SafeAreaView,
     StyleSheet,
-    ScrollView,
     View,
-    Text,
-    StatusBar,
-    Button
+    Text
   } from 'react-native';
 import DestinationCard from './DestinationCard';
 
   const styles = StyleSheet.create({
-    agendaContainer: {
-        flex: 1,
-        backgroundColor: '#e0e0e0',
-        width: 350,
-        alignSelf: 'center', 
-        borderRadius: 10,
-    
-    }, 
-    agendaText: {
-        flex: 1,
-        width: 300,
-        alignSelf: 'center',
-        paddingTop: 10,
+        agendaContainer: {
+            flex: 1,
+            backgroundColor: '#e0e0e0',
+            width: 350,
+            alignSelf: 'center', 
+            borderRadius: 10,
         
-    },
-
-
-  })
+        }, 
+        agendaText: {
+            flex: 1,
+            width: 300,
+            alignSelf: 'center',
+            paddingTop: 10,
+            
+        }
+    })
 
 class Agenda extends React.Component {
 
     monthHandler = () => {
-
         switch(this.props.date.slice(5, 7)) {
             case '01':
                 return <Text style={{ fontSize: 25 }}>January </Text>
@@ -60,7 +53,6 @@ class Agenda extends React.Component {
             case '12':
                 return <Text style={{ fontSize: 25 }}>December </Text>
         }
-
     }
 
     dateHandler = () => {
@@ -68,17 +60,15 @@ class Agenda extends React.Component {
             return <Text style={{ fontSize: 25 }}>{`${this.props.date.slice(9,10)}, ${this.props.date.slice(0, 4)}`}</Text>
         }
         else {
-            return <Text tyle={{ fontSize: 25 }}>{this.props.date.slice(8, 10)}</Text>
+            return <Text style={{ fontSize: 25 }}>{`${this.props.date.slice(8, 10)}, ${this.props.date.slice(0, 4)}`}</Text>
         }
     }
 
     destinationSort = (lhs, rhs) => {
         let results = parseInt(lhs.time.slice(11, 13)) > parseInt(rhs.time.slice(11, 13)) ? 1: parseInt(lhs.time.slice(11, 13)) < parseInt(rhs.time.slice(11, 13)) ? -1 : 0
-
         if (results === 0) {
             results = parseInt(lhs.time.slice(14, 16)) > parseInt(rhs.time.slice(14, 16)) ? 1 : parseInt(lhs.time.slice(14, 16)) < parseInt(rhs.time.slice(14, 16)) ? -1 : 0;
         }
-
         return results
     }
 
@@ -92,17 +82,7 @@ class Agenda extends React.Component {
                         {this.monthHandler()}{this.dateHandler()} 
                     </View>
                     {sortedDestinations.map(destination => (
-                        <DestinationCard key={destination.id} {...destination} scheduleId={this.props.scheduleId} deleteDestinationSchedule={this.props.deleteDestinationSchedule}/>
-                        // <View>
-                        //     <View style={{borderBottomColor: 'black', borderBottomWidth: 0.5, paddingBottom: 5}}>
-                        //         <Text style={{fontSize: 18}}>{`${d.time.slice(11, 13) - 5}:${d.time.slice(14, 16)} ${d.name}`}</Text>
-                        //         <Text >{d.address}</Text>
-                        //     </View>
-                        //     <View>
-                        //         <Text>{"\n"}</Text>
-                        //     </View>
-                        // </View>
-                        
+                        <DestinationCard key={destination.id} {...destination} scheduleId={this.props.scheduleId} deleteDestinationSchedule={this.props.deleteDestinationSchedule}/> 
                     ))}
                 </View>
             </View>

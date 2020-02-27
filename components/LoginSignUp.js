@@ -1,13 +1,24 @@
 import React from 'react'
 import {
-    SafeAreaView,
-    StyleSheet,
-    ScrollView,
     View,
-    Text,
     TextInput,
+    StyleSheet,
     Button
   } from 'react-native';
+
+  const styles = StyleSheet.create({
+    formFields: {
+        paddingTop: 30,
+        borderBottomColor: 'black', 
+        borderBottomWidth: 0.5,
+        marginLeft: 30,
+        marginRight: 30,
+        paddingBottom: 10
+    },
+    form: {
+        paddingTop: 30
+    }
+  })
 
 class LoginSignUp extends React.Component {
 
@@ -23,7 +34,6 @@ class LoginSignUp extends React.Component {
     loginHandler = () => {
         let userObj = this.state.formInput
         this.props.loginUser(userObj)
-        // this.props.navigation.navigate("User Container")
     }
 
     signupHandler = () => {
@@ -33,17 +43,16 @@ class LoginSignUp extends React.Component {
     createAccountHandler = () => {
         let userObj = this.state.formInput
         this.props.createUser(userObj)
-        // this.props.navigation.navigate("User Container")
     }
 
     render() {
         return (
-            <View>
-                <TextInput placeholder="Username" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, username: text}})}
+            <View style={styles.form}>
+                <TextInput style={styles.formFields} placeholder="Username" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, username: text}})}
                     value={this.state.formInput.username}/>
-                <TextInput placeholder="Password" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, password: text}})}
+                <TextInput style={styles.formFields} placeholder="Password" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, password: text}})}
                     value={this.state.formInput.password}/>
-                {this.state.showSignUp && <TextInput placeholder="Password Confirmation" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, passwordConfirmation: text}})}
+                {this.state.showSignUp && <TextInput style={styles.formFields} placeholder="Password Confirmation" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, passwordConfirmation: text}})}
                     value={this.state.formInput.passwordConfirmation}/>}
                 {!this.state.showSignUp && <Button title="Login" onPress={this.loginHandler} />}
                 {this.state.showSignUp ? <Button title="Create Account" onPress={this.createAccountHandler} /> : <Button title="Signup" onPress={this.signupHandler} />}

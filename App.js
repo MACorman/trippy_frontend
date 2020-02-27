@@ -1,16 +1,10 @@
 <script src="http://localhost:8097"></script>
 import React from 'react'
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar, 
+  Text, 
   Button
 } from 'react-native'
 import UserContainer from './containers/UserContainer'
-import NavBar from './containers/NavBar'
 import LoginSignUp from './components/LoginSignUp'
 import AsyncStorage from '@react-native-community/async-storage'
 import { NavigationContainer } from '@react-navigation/native'

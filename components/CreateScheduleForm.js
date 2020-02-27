@@ -11,8 +11,21 @@ import {
     Picker
   } from 'react-native';
   import ScheduleResults from '../containers/ScheduleResults'
-  import DateTimePicker from '@react-native-community/datetimepicker'
   import DateTimePickerModal from "react-native-modal-datetime-picker"
+
+  const styles = StyleSheet.create({
+    formFields: {
+        paddingTop: 30,
+        borderBottomColor: 'black', 
+        borderBottomWidth: 0.5,
+        marginLeft: 30,
+        marginRight: 30,
+        paddingBottom: 10
+    },
+    form: {
+        paddingTop: 30
+    }
+  })
 
 class CreateScheduleForm extends React.Component {
 
@@ -32,7 +45,6 @@ class CreateScheduleForm extends React.Component {
         let inputObj = this.state.formInput
         this.props.formInputHandler(inputObj)
         this.setState({showResults: true})
-        // this.props.navigation.navigate("Profile")
     }
 
     showDatePicker = () => {
@@ -44,27 +56,30 @@ class CreateScheduleForm extends React.Component {
     }
 
     handleConfirm = (date) => {
-        // debugger
         this.setState({formInput: {...this.state.formInput, date: date}})
         this.setState({isDatePickerVisible: false})
+    }
+
+    renderResults = () => {
+        this.setState({showResults: false}, () => this.props.navigation.navigate("Profile"))
     }
 
     render() {
         return(
             <SafeAreaView>
                 <ScrollView>
-                    <View>
+                    <View style={styles.form}>
                         {
                         this.state.showResults 
                         ?
-                        <ScheduleResults createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} results={this.props.results} />
+                        <ScheduleResults createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} renderResults={this.renderResults} results={this.props.results} />
                         :
                         <View>
-                            <TextInput placeholder="Schedule Name" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, name: text}})}
+                            <TextInput style={styles.formFields} placeholder="Schedule Name" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, name: text}})}
                             value={this.state.formInput.name}/>
-                            <TextInput placeholder="Vaction Location" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, location: text}})}
+                            <TextInput style={styles.formFields} placeholder="Vaction Location" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, location: text}})}
                             value={this.state.formInput.location}/>
-                            <TextInput placeholder="Must See Destination" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, mustSee: text}})}
+                            <TextInput style={styles.formFields} placeholder="Must See Destination" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, mustSee: text}})}
                             value={this.state.formInput.mustSee}/>
                             <Picker selectedValue={this.state.formInput.category} onValueChange={(itemValue) =>
                                 this.setState({formInput: {...this.state.formInput, category: itemValue}})}>
@@ -97,8 +112,6 @@ class CreateScheduleForm extends React.Component {
                                 onCancel={this.hideDatePicker}
                             />
                             <Button title="Create Schedule" onPress={this.formHandler} />
-                    
-    
                         </View>
                         }
                     </View>

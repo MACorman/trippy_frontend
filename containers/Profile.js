@@ -1,7 +1,6 @@
 import React from 'react'
 import {
     SafeAreaView,
-    StyleSheet,
     ScrollView,
     View,
     Text,
@@ -34,12 +33,11 @@ class Profile extends React.Component {
                         <SchedulesContainer userSchedules={this.props.userSchedules} schedules={this.props.schedules} currentUser={this.props.currentUser} viewSchedule={this.props.viewSchedule} showSchedule={this.showSchedule}/>
                         :
                         <View>
-                            <Button title="Back" onPress={() => this.setState({showSchedule: false})}/>
+                            <Button title="Back to All Schedules" onPress={() => this.setState({showSchedule: false})}/>
                             <ScheduleShow schedule={this.props.schedule} destinations={this.props.destinations} deleteSchedule={this.props.deleteSchedule} deleteDestinationSchedule={this.props.deleteDestinationSchedule} showAddDestination={this.props.showAddDestination} addDestinationInputHandler={this.props.addDestinationInputHandler} createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} results={this.props.results} showSchedule={this.showSchedule} />
                         </View>
                         }
                     </View>
-
                 </ScrollView>
             </SafeAreaView>
         )

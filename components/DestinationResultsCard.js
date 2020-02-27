@@ -1,11 +1,7 @@
 import React from 'react'
 import {
-    SafeAreaView,
-    StyleSheet,
-    ScrollView,
     View,
     Text,
-    TextInput,
     Button
 } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker"
@@ -36,7 +32,6 @@ class DestinationResultsCard extends React.Component {
     }
  
     handleConfirm = (time) => {
-         // debugger
          this.setState({time})
          this.setState({isTimePickerVisible: false})
     }
