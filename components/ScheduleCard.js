@@ -1,11 +1,7 @@
 import React from 'react'
 import {
-    SafeAreaView,
-    StyleSheet,
-    ScrollView,
     View,
     Text,
-    StatusBar,
     Button
   } from 'react-native';
 
@@ -18,7 +14,6 @@ class ScheduleCard extends React.Component {
         this.setState({viewScheduleButton: !this.state.viewScheduleButton})
         this.props.viewSchedule(this.props.id)
         this.props.showSchedule()
-
     }
 
     render() {
@@ -29,7 +24,6 @@ class ScheduleCard extends React.Component {
                 <Text>{`Location: ${this.props.location}`}</Text>
                 <Text>{`Date: ${this.props.date.slice(5, 7)}/${this.props.date.slice(8, 10)}/${this.props.date.slice(0, 4)}`}</Text>
                 <Button title={this.state.viewScheduleButton ? "View Schedule" : "Hide Schedule" } onPress={this.buttonHandler}/>
-
             </View>
         )
     }

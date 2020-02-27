@@ -12,6 +12,20 @@ import {
   } from 'react-native';
   import ScheduleResults from '../containers/ScheduleResults'
 
+  const styles = StyleSheet.create({
+    formFields: {
+        paddingTop: 30,
+        borderBottomColor: 'black', 
+        borderBottomWidth: 0.5,
+        marginLeft: 30,
+        marginRight: 30,
+        paddingBottom: 10
+    },
+    form: {
+        paddingTop: 30
+    }
+  })
+
 class AddDestinationForm extends React.Component {
 
     state = {
@@ -32,22 +46,26 @@ class AddDestinationForm extends React.Component {
         
     }
 
+    showSearchResults = () => {
+        this.setState({showResults: false}, this.props.closeEditForm)
+    }
+
     render() {
         return (
             <View>
                 {
                 this.state.showResults 
                 ?
-                <ScheduleResults createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} results={this.props.results} />
+                <ScheduleResults createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} showSchedule={this.props.showSchedule} showSearchResults={this.showSearchResults} results={this.props.results} />
                 :
-                <View>
+                <View style={styles.form}>
                     <TextInput 
                     value={this.state.formInput.name}/>
                     <TextInput 
                     value={this.state.formInput.location}/>
                     <TextInput 
                     value={`Date: ${this.state.formInput.date.slice(5, 7)}/${this.state.formInput.date.slice(8, 10)}/${this.state.formInput.date.slice(0, 4)}`} />
-                    <TextInput placeholder="Must See Destination" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, mustSee: text}})}
+                    <TextInput style={styles.formFields} placeholder="Must See Destination" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, mustSee: text}})}
                     value={this.state.formInput.mustSee}/>
                     <Picker selectedValue={this.state.formInput.category} onValueChange={(itemValue) =>
                         this.setState({formInput: {...this.state.formInput, category: itemValue}})}>

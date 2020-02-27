@@ -1,11 +1,6 @@
 import React from 'react'
 import {
-    SafeAreaView,
-    StyleSheet,
-    ScrollView,
-    View,
-    Text,
-    StatusBar,
+    View
   } from 'react-native';
 import ScheduleCard from '../components/ScheduleCard'
 

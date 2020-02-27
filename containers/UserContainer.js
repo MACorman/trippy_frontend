@@ -1,35 +1,18 @@
 import React from 'react'
-import {
-    SafeAreaView,
-    StyleSheet,
-    ScrollView,
-    View,
-    Text,
-    Image,
-    Button
-  } from 'react-native';
-// import SchedulesContainer from './SchedulesContainer'
-// import ScheduleShow from './ScheduleShow'
 import CreateScheduleForm from '../components/CreateScheduleForm'
-// import ScheduleResults from './ScheduleResults'
 import { API_KEY } from 'react-native-dotenv'
-// import AddDestinationForm from '../components/AddDestinationForm';
 import EditProfileForm from '../components/EditProfileForm';
 import Profile from './Profile'
-import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
-const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator()
 
 
 class UserContainer extends React.Component {
 
     state = {
-        // showSchedule: false,
         schedules: [],
         selectedSchedule: {},
-        // addScheduleForm: false,
         lat: "",
         long: "", 
         apiResults: [],
@@ -38,8 +21,6 @@ class UserContainer extends React.Component {
         newSchedule: {},
         destinationSchedules: [],
         selectedScheduleDestinations: [],
-        // showAddDestinationToSchedule: false,
-        // showEditProfile: false
     }
 
     componentDidMount() {
@@ -63,10 +44,6 @@ class UserContainer extends React.Component {
         this.setState({showSchedule: !this.state.showSchedule})
 
     }
-
-    // addScheduleForm = () => {
-    //     this.setState({addScheduleForm: !this.state.addScheduleForm})
-    // }
 
     formInputHandler = (inputObj) => {
         this.setState({addScheduleForm: false})
@@ -165,7 +142,6 @@ class UserContainer extends React.Component {
     deleteSchedule = () => {
         let shortenedSchedulesArr = [...this.state.schedules]
         shortenedSchedulesArr = shortenedSchedulesArr.filter(schedule => schedule.id !== this.state.selectedSchedule.id)
-        // this.setState({schedules: shortenedSchedulesArr})
 
         let updatedUserSchedules = [...this.state.userSchedules]
         updatedUserSchedules = updatedUserSchedules.filter(us => us.id !== this.state.selectedSchedule.id)
@@ -203,10 +179,6 @@ class UserContainer extends React.Component {
         
     }
 
-    // showAddDestination = () => {
-    //     this.setState({showAddDestinationToSchedule: true})
-    // }
-
     addDestinationInputHandler = (inputObj) => {
         this.setState({showAddDestinationToSchedule: false})
         this.setState({newScheduleInput: inputObj})
@@ -217,12 +189,7 @@ class UserContainer extends React.Component {
 
     }
 
-    // editProfileHandler = () => {
-    //     this.setState({showEditProfile: true})
-    // }
-
     editUser = (editedUserObj) => {
-        // this.setState({showEditProfile: false})
         this.props.editCurrentUser(editedUserObj)
     }
 
@@ -238,7 +205,6 @@ class UserContainer extends React.Component {
                 <Drawer.Screen name="Add Schedule">
                     {props => <CreateScheduleForm {...props} formInputHandler={this.formInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults}/>}
                 </Drawer.Screen>
-
             </Drawer.Navigator>
         )
     }
