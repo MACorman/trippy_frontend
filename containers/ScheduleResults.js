@@ -15,7 +15,7 @@ class ScheduleResults extends React.Component {
                 <Text>Must See Attraction: {this.props.newScheduleInput.mustSee}</Text>
                 {this.props.newScheduleInput.category && <Text>{this.props.newScheduleInput.category.charAt(0).toUpperCase() + this.props.newScheduleInput.category.slice(1)} results based on {this.props.newScheduleInput.mustSee}</Text>}
                 <Button title="Done" onPress={this.props.showSchedule? this.props.showSearchResults : this.props.renderResults}/>
-                {this.props.results.map(result => <DestinationResultsCard key={result.id} {...result} createDestination={this.props.createDestination} category={this.props.newScheduleInput.category} />)}
+                {this.props.results.map(result => <DestinationResultsCard key={result.id} {...result} createDestination={this.props.createDestination} category={this.props.newScheduleInput.category} selectedSchedule={this.props.selectedSchedule}/>)}
             </View>
         )
     }

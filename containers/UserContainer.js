@@ -118,6 +118,7 @@ class UserContainer extends React.Component {
     }
 
     createDestination = (newDestObj) => {
+        // this.setState({selectedSchedule: this.state.schedules.find(s => s.id === parseInt(id))})
         fetch("http://localhost:3000/destinations", {
             method: "POST", 
             headers: {
@@ -141,9 +142,10 @@ class UserContainer extends React.Component {
             })
             .then(resp => resp.json())
             .then(ds => {
+                let updatedDestinationSchedules = [...this.state.destinationSchedules, ds]
                 let updatedDestinations = [...this.state.destinations, destination]
                 let updatedSelectedScheduleDestinations = [...this.state.selectedScheduleDestinations, destination]
-                this.setState({selectedScheduleDestinations: updatedSelectedScheduleDestinations, destinations: updatedDestinations})
+                this.setState({selectedScheduleDestinations: updatedSelectedScheduleDestinations, destinations: updatedDestinations, destinationSchedules: updatedDestinationSchedules})
             })
         })
     }
@@ -205,14 +207,14 @@ class UserContainer extends React.Component {
     render() {
         return (
             <Drawer.Navigator>
-                <Drawer.Screen name="Profile" >
-                    {props => <Profile {...props} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} schedules={this.state.schedules} userSchedules={this.state.userSchedules} schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} addDestinationInputHandler={this.addDestinationInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} />}
+                <Drawer.Screen name="Profile">
+                    {props => <Profile {...props} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} schedules={this.state.schedules} userSchedules={this.state.userSchedules} schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} addDestinationInputHandler={this.addDestinationInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} selectedScheduleDestinations={this.state.selectedScheduleDestinations} />}
                 </Drawer.Screen>
                 <Drawer.Screen name="Edit Profile">
                     {props => <EditProfileForm {...props} currentUser={this.props.currentUser} editUser={this.editUser}/>}
                 </Drawer.Screen>
                 <Drawer.Screen name="Add Schedule">
-                    {props => <CreateScheduleForm {...props} formInputHandler={this.formInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults}/>}
+                    {props => <CreateScheduleForm {...props} formInputHandler={this.formInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} selectedSchedule={this.state.selectedSchedule}/>}
                 </Drawer.Screen>
             </Drawer.Navigator>
         )

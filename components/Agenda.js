@@ -9,7 +9,7 @@ import DestinationCard from './DestinationCard';
   const styles = StyleSheet.create({
         agendaContainer: {
             flex: 1,
-            backgroundColor: '#e0e0e0',
+            backgroundColor: '#f3acb4',
             width: 350,
             alignSelf: 'center', 
             borderRadius: 10,
@@ -74,7 +74,7 @@ class Agenda extends React.Component {
 
 
     render() {
-        let sortedDestinations = this.props.destinations.sort(this.destinationSort)
+        let sortedDestinations = this.props.selectedScheduleDestinations.sort(this.destinationSort)
         return (
             <View style={styles.agendaContainer}>
                 <View style={styles.agendaText}>

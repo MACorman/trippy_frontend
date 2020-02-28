@@ -72,7 +72,7 @@ class CreateScheduleForm extends React.Component {
                         {
                         this.state.showResults 
                         ?
-                        <ScheduleResults createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} renderResults={this.renderResults} results={this.props.results} />
+                        <ScheduleResults createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} renderResults={this.renderResults} results={this.props.results} selectedSchedule={this.props.selectedSchedule} />
                         :
                         <View>
                             <TextInput style={styles.formFields} placeholder="Schedule Name" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, name: text}})}
