@@ -38,7 +38,7 @@ class Profile extends React.Component {
                         :
                         <View>
                             <Button title="Back to All Schedules" onPress={() => this.setState({showSchedule: false})}/>
-                            <ScheduleShow schedule={this.props.schedule} afterDelete={this.afterDelete} destinations={this.props.destinations} deleteSchedule={this.props.deleteSchedule} deleteDestinationSchedule={this.props.deleteDestinationSchedule} showAddDestination={this.props.showAddDestination} addDestinationInputHandler={this.props.addDestinationInputHandler} createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} results={this.props.results} showSchedule={this.showSchedule} />
+                            <ScheduleShow schedule={this.props.schedule} afterDelete={this.afterDelete} destinations={this.props.destinations} deleteSchedule={this.props.deleteSchedule} deleteDestinationSchedule={this.props.deleteDestinationSchedule} showAddDestination={this.props.showAddDestination} addDestinationInputHandler={this.props.addDestinationInputHandler} createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} results={this.props.results} showSchedule={this.showSchedule} selectedScheduleDestinations={this.props.selectedScheduleDestinations}/>
                         </View>
                         }
                     </View>

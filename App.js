@@ -107,10 +107,10 @@ class App extends React.Component {
       <>
         <NavigationContainer>
           <Stack.Navigator>
-            {!this.state.loggedIn && <Stack.Screen name="Login/SignUp" options={{headerTitle: props => <Text {...props}>Trippin</Text>}}>
+            {!this.state.loggedIn && <Stack.Screen name="Login/SignUp" options={{headerTitle: props => <Text {...props}>Trippin</Text>, headerStyle: {backgroundColor: '#e23c52'}}}>
               {props => <LoginSignUp {...props} loginUser={this.loginUser} loggedIn={this.state.loggedIn} createUser={this.createUser}/>}
             </Stack.Screen>}
-            {this.state.loggedIn && <Stack.Screen name="User Container" options={{headerTitle: props => <Text {...props}>Trippin</Text>, headerRight: () => (<Button title="logout" onPress={() => this.logout()}/> )}}>
+            {this.state.loggedIn && <Stack.Screen name="User Container" options={{headerTitle: props => <Text {...props}>Trippin</Text>, headerRight: () => (<Button title="logout" onPress={() => this.logout()}/> ), headerStyle: {backgroundColor: '#e23c52'}}}>
               {props => <UserContainer {...props} currentUser={this.state.currentUser} cuschedules={this.state.currentUser.schedules} editCurrentUser={this.editCurrentUser}/>} 
             </Stack.Screen>}
           </Stack.Navigator>

@@ -3,7 +3,8 @@ import {
     View,
     TextInput,
     StyleSheet,
-    Button
+    Button,
+    Image
   } from 'react-native';
 
   const styles = StyleSheet.create({
@@ -16,7 +17,7 @@ import {
         paddingBottom: 10
     },
     form: {
-        paddingTop: 30
+        paddingTop: 260
     }
   })
 
@@ -48,11 +49,12 @@ class LoginSignUp extends React.Component {
     render() {
         return (
             <View style={styles.form}>
+                <Image style={{alignSelf: 'center'}} source={require('../img/TrippinLogo.png')}/>
                 <TextInput style={styles.formFields} placeholder="Username" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, username: text}})}
                     value={this.state.formInput.username}/>
-                <TextInput style={styles.formFields} placeholder="Password" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, password: text}})}
+                <TextInput style={styles.formFields} placeholder="Password" secureTextEntry={true} onChangeText={(text) => this.setState({formInput:{...this.state.formInput, password: text}})}
                     value={this.state.formInput.password}/>
-                {this.state.showSignUp && <TextInput style={styles.formFields} placeholder="Password Confirmation" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, passwordConfirmation: text}})}
+                {this.state.showSignUp && <TextInput style={styles.formFields} placeholder="Password Confirmation" secureTextEntry={true} onChangeText={(text) => this.setState({formInput:{...this.state.formInput, passwordConfirmation: text}})}
                     value={this.state.formInput.passwordConfirmation}/>}
                 {!this.state.showSignUp && <Button title="Login" onPress={this.loginHandler} />}
                 {this.state.showSignUp ? <Button title="Create Account" onPress={this.createAccountHandler} /> : <Button title="Signup" onPress={this.signupHandler} />}
