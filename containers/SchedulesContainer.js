@@ -1,6 +1,7 @@
 import React from 'react'
 import {
-    View
+    View,
+    Text
   } from 'react-native';
 import ScheduleCard from '../components/ScheduleCard'
 
@@ -27,8 +28,9 @@ class SchedulesContainer extends React.Component {
         let sortedCurrentUserSchedules = currentUserSchedules.sort(this.scheduleSort)
     
         return (
-            <View>
-                {this.props.userSchedules && sortedCurrentUserSchedules.map(schedule => <ScheduleCard key={schedule.id} {...schedule} viewSchedule={this.props.viewSchedule} showSchedule={this.props.showSchedule}/>)}
+            <View style={{borderWidth: 3, borderColor: '#e23c52', borderRadius: 10, }}>
+                <Text style={{fontSize: 20, padding: 10, fontFamily: 'DamascusLight'}}>Upcoming Schedules</Text>
+                {sortedCurrentUserSchedules.map(schedule => <ScheduleCard key={schedule.id} {...schedule} viewSchedule={this.props.viewSchedule} showSchedule={this.props.showSchedule}/>)}
             </View>
         )
     }

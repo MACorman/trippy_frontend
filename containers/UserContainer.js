@@ -208,7 +208,7 @@ class UserContainer extends React.Component {
         return (
             <Drawer.Navigator>
                 <Drawer.Screen name="Profile">
-                    {props => <Profile {...props} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} schedules={this.state.schedules} userSchedules={this.state.userSchedules} schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} addDestinationInputHandler={this.addDestinationInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} selectedScheduleDestinations={this.state.selectedScheduleDestinations} />}
+                    {props => <Profile {...props} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} schedules={this.state.schedules} userSchedules={this.state.userSchedules} schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} addDestinationInputHandler={this.addDestinationInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} selectedScheduleDestinations={this.state.selectedScheduleDestinations} lat={this.state.lat} long={this.state.long} />}
                 </Drawer.Screen>
                 <Drawer.Screen name="Edit Profile">
                     {props => <EditProfileForm {...props} currentUser={this.props.currentUser} editUser={this.editUser}/>}

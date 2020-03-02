@@ -1,18 +1,30 @@
 import React from 'react'
 import {
     StyleSheet,
+    ScrollView,
     View,
     Text
   } from 'react-native';
 import DestinationCard from './DestinationCard';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
+
 
   const styles = StyleSheet.create({
         agendaContainer: {
             flex: 1,
-            backgroundColor: '#f3acb4',
+            borderWidth: 3,
+            borderColor: '#e23c52',
+
+            // backgroundColor: '#f3acb4',
             width: 350,
             alignSelf: 'center', 
             borderRadius: 10,
+            position: 'relative',
+            top: 270,
+            left: 0,
+            right: 0,
+            bottom: 270,
+
         
         }, 
         agendaText: {
@@ -20,11 +32,17 @@ import DestinationCard from './DestinationCard';
             width: 300,
             alignSelf: 'center',
             paddingTop: 10,
+
             
         }
     })
 
 class Agenda extends React.Component {
+
+    state = {
+        lat: '',
+        long: ''
+    }
 
     monthHandler = () => {
         switch(this.props.date.slice(5, 7)) {
@@ -57,10 +75,10 @@ class Agenda extends React.Component {
 
     dateHandler = () => {
         if (this.props.date.slice(8, 9) === '0') {
-            return <Text style={{ fontSize: 25 }}>{`${this.props.date.slice(9,10)}, ${this.props.date.slice(0, 4)}`}</Text>
+            return <Text style={{ fontSize: 25, fontFamily: 'Damascus'}}>{`${this.props.date.slice(9,10)}, ${this.props.date.slice(0, 4)}`}</Text>
         }
         else {
-            return <Text style={{ fontSize: 25 }}>{`${this.props.date.slice(8, 10)}, ${this.props.date.slice(0, 4)}`}</Text>
+            return <Text style={{ fontSize: 25, fontFamily: 'Damascus'}}>{`${this.props.date.slice(8, 10)}, ${this.props.date.slice(0, 4)}`}</Text>
         }
     }
 
@@ -73,17 +91,20 @@ class Agenda extends React.Component {
     }
 
 
+
     render() {
         let sortedDestinations = this.props.selectedScheduleDestinations.sort(this.destinationSort)
         return (
-            <View style={styles.agendaContainer}>
-                <View style={styles.agendaText}>
-                    <View style={{flexDirection:'row', paddingBottom: 20}}>
-                        {this.monthHandler()}{this.dateHandler()} 
+            <View>
+                <View style={styles.agendaContainer}>
+                    <View style={styles.agendaText}>
+                        <View style={{flexDirection:'row', paddingBottom: 20}}>
+                            {this.monthHandler()}{this.dateHandler()} 
+                        </View>
+                        {sortedDestinations.map(destination => (
+                            <DestinationCard key={destination.id} {...destination} scheduleId={this.props.scheduleId} deleteDestinationSchedule={this.props.deleteDestinationSchedule}/> 
+                        ))}
                     </View>
-                    {sortedDestinations.map(destination => (
-                        <DestinationCard key={destination.id} {...destination} scheduleId={this.props.scheduleId} deleteDestinationSchedule={this.props.deleteDestinationSchedule}/> 
-                    ))}
                 </View>
             </View>
         )
