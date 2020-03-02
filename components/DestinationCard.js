@@ -2,8 +2,21 @@ import React from 'react'
 import {
     View,
     Text,
-    Button
+    Button,
+    StyleSheet
 } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+
+const styles = StyleSheet.create({
+    destination: {
+        // borderWidth: 3,
+        borderRadius: 10,
+        // borderColor: '#e23c52',
+        padding: 5,
+        backgroundColor: '#f3acb4'
+    }
+})
 
 class DestinationCard extends React.Component {
 
@@ -16,10 +29,10 @@ class DestinationCard extends React.Component {
     render() {
         return (
             <View>
-                <View style={{borderBottomColor: 'black', borderBottomWidth: 0.5, paddingBottom: 5}}>
-                    <Text style={{fontSize: 18}}>{`${this.props.time.slice(11, 13) - 5}:${this.props.time.slice(14, 16)}  ${this.props.name}`}</Text>
-                    <Text style={{marginLeft: 52}}>{this.props.address}</Text>
-                    <Button title="Delete Destination" onPress={this.deleteHandler}/>
+                <View style={styles.destination}>
+                    <Text style={{fontSize: 18, fontFamily: 'Damascus'}}>{`${this.props.time.slice(11, 13) - 5}:${this.props.time.slice(14, 16)}  ${this.props.name}`}</Text>
+                    <Text style={{marginLeft: 52, fontFamily: 'DamascusLight'}}>{this.props.address}</Text>
+                    <FontAwesomeIcon icon={ faTrashAlt } onPress={this.deleteHandler} size={20} style={{left: 270}} color={'#e23c52'}/>
                 </View>
                 <View>
                     <Text>{"\n"}</Text>

@@ -50,6 +50,7 @@ class DestinationResultsCard extends React.Component {
                     locale="en_GB"
                     onConfirm={this.handleConfirm}
                     onCancel={this.hideTimePicker}
+                    minuteInterval={15}
                 />
                 <Button title="Add To Schedule" onPress={this.addDestinationHandler}/>
             </View>

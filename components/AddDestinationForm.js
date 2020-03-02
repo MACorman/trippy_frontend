@@ -8,21 +8,36 @@ import {
     Image,
     Button, 
     TextInput,
-    Picker
+    Picker,
+    TouchableHighlight
   } from 'react-native';
   import ScheduleResults from '../containers/ScheduleResults'
 
   const styles = StyleSheet.create({
     formFields: {
         paddingTop: 30,
-        borderBottomColor: 'black', 
+        borderBottomColor: '#e32c52', 
         borderBottomWidth: 0.5,
-        marginLeft: 30,
-        marginRight: 30,
-        paddingBottom: 10
+        marginLeft: 20,
+        marginRight: 20,
+        paddingBottom: 5
     },
     form: {
-        paddingTop: 30
+        paddingTop: 10, 
+    },
+    button: {
+        backgroundColor: '#e23c52',
+        borderColor: 'white',
+        borderWidth: 1,
+        borderRadius: 12,
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 'bold',
+        overflow: 'hidden',
+        padding: 12,
+        textAlign:'center',
+        width: 200,
+        alignSelf: 'center'
     }
   })
 
@@ -59,15 +74,18 @@ class AddDestinationForm extends React.Component {
                 <ScheduleResults createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} showSchedule={this.props.showSchedule} showSearchResults={this.showSearchResults} results={this.props.results} />
                 :
                 <View style={styles.form}>
-                    <TextInput 
-                    value={this.state.formInput.name}/>
-                    <TextInput 
-                    value={this.state.formInput.location}/>
-                    <TextInput 
-                    value={`Date: ${this.state.formInput.date.slice(5, 7)}/${this.state.formInput.date.slice(8, 10)}/${this.state.formInput.date.slice(0, 4)}`} />
+                    <Text style={{fontSize: 25, fontFamily: 'Damascus'}}>
+                        {this.state.formInput.name}
+                    </Text>
+                    <Text style={{fontSize: 18, fontFamily: 'DamascusLight'}}>
+                        {this.state.formInput.location}
+                    </Text>
+                    <Text style={{fontSize: 18, fontFamily: 'DamascusLight'}}>
+                        {`${this.state.formInput.date.slice(5, 7)}/${this.state.formInput.date.slice(8, 10)}/${this.state.formInput.date.slice(0, 4)}`}
+                    </Text> 
                     <TextInput style={styles.formFields} placeholder="Must See Destination" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, mustSee: text}})}
                     value={this.state.formInput.mustSee}/>
-                    <Picker selectedValue={this.state.formInput.category} onValueChange={(itemValue) =>
+                    <Picker itemStyle={{ color: "#e32c52", fontSize: 18}} selectedValue={this.state.formInput.category} onValueChange={(itemValue) =>
                         this.setState({formInput: {...this.state.formInput, category: itemValue}})}>
                         <Picker.Item label="Aquarium" value="aquarium" />
                         <Picker.Item label="Art Gallery" value="art_gallery" />
@@ -90,7 +108,9 @@ class AddDestinationForm extends React.Component {
                         <Picker.Item label="University" value="university" />
                         <Picker.Item label="Zoo" value="zoo" /> 
                     </Picker>
-                    <Button title="Create New Search" onPress={this.formHandler} />
+                    <TouchableHighlight style={styles.button}>
+                        <Button title="Create New Search" onPress={this.formHandler} color='white'/>
+                    </TouchableHighlight>
                 </View>
                 }
             </View>
