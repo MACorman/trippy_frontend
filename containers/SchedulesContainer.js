@@ -28,8 +28,8 @@ class SchedulesContainer extends React.Component {
         let sortedCurrentUserSchedules = currentUserSchedules.sort(this.scheduleSort)
     
         return (
-            <View style={{borderWidth: 3, borderColor: '#e23c52', borderRadius: 10, }}>
-                <Text style={{fontSize: 20, padding: 10, fontFamily: 'DamascusLight'}}>Upcoming Schedules</Text>
+            <View style={{borderWidth: 3, borderColor: '#517CA4', borderRadius: 10, }}>
+                <Text style={{fontSize: 20, padding: 10, fontFamily: 'DamascusLight'}}>Upcoming Trips</Text>
                 {sortedCurrentUserSchedules.map(schedule => <ScheduleCard key={schedule.id} {...schedule} viewSchedule={this.props.viewSchedule} showSchedule={this.props.showSchedule}/>)}
             </View>
         )

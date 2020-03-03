@@ -10,10 +10,10 @@ import {
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        top: 50,
+        top: 65,
         left: 0,
         right: 0,
-        bottom: 0,
+        bottom: 60,
         alignItems: 'center',
         flexDirection: 'column',
         flex: 1, 
@@ -25,11 +25,12 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
+        height: 300,
         flexDirection: 'column',
         flex: 1,
         borderRadius: 10,
         borderWidth: 3,
-        borderColor: "#e23c52",
+        borderColor: "#517CA4",
         
       }
 })
@@ -68,7 +69,7 @@ class MapEmbed extends React.Component {
                 let long = data.candidates[0].geometry.location.lng
                 // this.setState({lat, long})  
                 let newMarker = {
-                    title: 'Marker',
+                    title: dest.name,
                     coordinates: {
                         latitude: lat,
                         longitude: long

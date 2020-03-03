@@ -12,7 +12,7 @@ class UserContainer extends React.Component {
 
     state = {
         schedules: [],
-        selectedSchedule: {},
+        selectedSchedule: {},// eventually itd better for this to just be an id#, then find in schedules array
         lat: "",
         long: "", 
         apiResults: [],
@@ -44,7 +44,8 @@ class UserContainer extends React.Component {
 
     viewSchedule = (id) => {
         let selectedSchedule = this.state.schedules.find(schedule => schedule.id === parseInt(id))
-        let selectedScheduleDestinations = selectedSchedule.destinations
+        // let selectedScheduleDestinations = selectedSchedule.destinations //destinations is an empty array
+        let selectedScheduleDestinations = this.state.destinations.filter(dest => dest.schedules.find(schedule => schedule.id === parseInt(id)))
         this.setState({ selectedSchedule, selectedScheduleDestinations })
         this.setState({showSchedule: !this.state.showSchedule})
 
@@ -111,13 +112,13 @@ class UserContainer extends React.Component {
     }
 
     getDestinationResults = (category) => {
-        fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.lat},${this.state.long}&radius=1600&type=${category}&key=${API_KEY}`)
+        fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.lat},${this.state.long}&radius=800&type=${category}&key=${API_KEY}`)
         .then(resp => resp.json())
         .then(data => this.setState({apiResults: data.results}))
         .catch(err => console.error(err))
     }
 
-    createDestination = (newDestObj) => {
+    createDestination = (newDestObj, scheduleName) => {
         // this.setState({selectedSchedule: this.state.schedules.find(s => s.id === parseInt(id))})
         fetch("http://localhost:3000/destinations", {
             method: "POST", 
@@ -129,6 +130,7 @@ class UserContainer extends React.Component {
         })
         .then(resp => resp.json())
         .then(destination => {
+            this.setState({selectedSchedule: this.state.schedules.find(s => s.name === scheduleName)})
             fetch("http://localhost:3000/destination_schedules", {
                 method: "POST",
                 headers: {
@@ -206,14 +208,18 @@ class UserContainer extends React.Component {
 
     render() {
         return (
-            <Drawer.Navigator>
+            <Drawer.Navigator
+            drawerStyle={{
+                flex: 1
+            }}
+            >
                 <Drawer.Screen name="Profile">
                     {props => <Profile {...props} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} schedules={this.state.schedules} userSchedules={this.state.userSchedules} schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} addDestinationInputHandler={this.addDestinationInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} selectedScheduleDestinations={this.state.selectedScheduleDestinations} lat={this.state.lat} long={this.state.long} />}
                 </Drawer.Screen>
                 <Drawer.Screen name="Edit Profile">
                     {props => <EditProfileForm {...props} currentUser={this.props.currentUser} editUser={this.editUser}/>}
                 </Drawer.Screen>
-                <Drawer.Screen name="Add Schedule">
+                <Drawer.Screen name="Add Trip">
                     {props => <CreateScheduleForm {...props} formInputHandler={this.formInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} selectedSchedule={this.state.selectedSchedule}/>}
                 </Drawer.Screen>
             </Drawer.Navigator>

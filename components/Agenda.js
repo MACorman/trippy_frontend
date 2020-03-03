@@ -13,14 +13,14 @@ import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
         agendaContainer: {
             flex: 1,
             borderWidth: 3,
-            borderColor: '#e23c52',
+            borderColor: '#517CA4',
 
             // backgroundColor: '#f3acb4',
-            width: 350,
+            width: 375,
             alignSelf: 'center', 
             borderRadius: 10,
             position: 'relative',
-            top: 270,
+            top: 330,
             left: 0,
             right: 0,
             bottom: 270,
@@ -29,7 +29,7 @@ import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
         }, 
         agendaText: {
             flex: 1,
-            width: 300,
+            width: 325,
             alignSelf: 'center',
             paddingTop: 10,
 

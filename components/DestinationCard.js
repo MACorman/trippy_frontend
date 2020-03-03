@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         // borderColor: '#e23c52',
         padding: 5,
-        backgroundColor: '#f3acb4'
+        backgroundColor: '#b4c8da'
     }
 })
 
@@ -24,6 +24,7 @@ class DestinationCard extends React.Component {
         let scheduleId = this.props.scheduleId
         let destinationId = this.props.id
         this.props.deleteDestinationSchedule(destinationId, scheduleId)
+        // this.props.deleteMarkerHandler(this.props.name)
     }
 
     render() {
@@ -32,7 +33,7 @@ class DestinationCard extends React.Component {
                 <View style={styles.destination}>
                     <Text style={{fontSize: 18, fontFamily: 'Damascus'}}>{`${this.props.time.slice(11, 13) - 5}:${this.props.time.slice(14, 16)}  ${this.props.name}`}</Text>
                     <Text style={{marginLeft: 52, fontFamily: 'DamascusLight'}}>{this.props.address}</Text>
-                    <FontAwesomeIcon icon={ faTrashAlt } onPress={this.deleteHandler} size={20} style={{left: 270}} color={'#e23c52'}/>
+                    <FontAwesomeIcon icon={ faTrashAlt } onPress={this.deleteHandler} size={20} style={{left: 270}} color={'#517CA4'}/>
                 </View>
                 <View>
                     <Text>{"\n"}</Text>

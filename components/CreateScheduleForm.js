@@ -17,18 +17,17 @@ import {
   const styles = StyleSheet.create({
     formFields: {
         paddingTop: 30,
-        borderBottomColor: '#e32c52', 
+        borderBottomColor: '#517CA4', 
         borderBottomWidth: 0.5,
         marginLeft: 40,
         marginRight: 40,
         paddingBottom: 5
     },
     form: {
-        paddingTop: 125,
-        paddingBottom: 20 
+        padding: 15
     },
     button: {
-        backgroundColor: '#e23c52',
+        backgroundColor: '#517CA4',
         borderColor: 'white',
         borderWidth: 1,
         borderRadius: 12,
@@ -91,13 +90,13 @@ class CreateScheduleForm extends React.Component {
                         <ScheduleResults createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} renderResults={this.renderResults} results={this.props.results} selectedSchedule={this.props.selectedSchedule} />
                         :
                         <View>
-                            <TextInput style={styles.formFields} placeholder="Schedule Name" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, name: text}})}
+                            <TextInput style={styles.formFields} placeholder="Trip Name" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, name: text}})}
                             value={this.state.formInput.name}/>
-                            <TextInput style={styles.formFields} placeholder="Vaction Location" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, location: text}})}
+                            <TextInput style={styles.formFields} placeholder="Vaction City" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, location: text}})}
                             value={this.state.formInput.location}/>
                             <TextInput style={styles.formFields} placeholder="Must See Destination" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, mustSee: text}})}
                             value={this.state.formInput.mustSee}/>
-                            <Picker itemStyle={{ color: "#e32c52", fontSize: 18}} selectedValue={this.state.formInput.category} onValueChange={(itemValue) =>
+                            <Picker itemStyle={{ color: "#517CA4", fontSize: 18}} selectedValue={this.state.formInput.category} onValueChange={(itemValue) =>
                                 this.setState({formInput: {...this.state.formInput, category: itemValue}})}>
                                 <Picker.Item label="Aquarium" value="aquarium" />
                                 <Picker.Item label="Art Gallery" value="art_gallery" />
@@ -121,7 +120,7 @@ class CreateScheduleForm extends React.Component {
                                 <Picker.Item label="Zoo" value="zoo" /> 
                             </Picker>
                             <TouchableHighlight style={styles.button}>
-                                <Button title="Show Date Picker" onPress={this.showDatePicker} color='white'/>
+                                <Button title="Select a Date" onPress={this.showDatePicker} color='white'/>
                             </TouchableHighlight>
                             <DateTimePickerModal
                                 isVisible={this.state.isDatePickerVisible}
