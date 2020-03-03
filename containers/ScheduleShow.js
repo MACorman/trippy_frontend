@@ -16,17 +16,18 @@ import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#e23c52',
+        backgroundColor: '#517CA4',
         borderRadius: 10,
         paddingTop: 10,
-        flex: 3
+        flex: 1
                 
     },
     text: {
-        fontSize: 20
+        fontSize: 20,
+        flex: 1
     },
     button: {
-        backgroundColor: '#e23c52',
+        backgroundColor: '#517CA4',
         borderColor: 'white',
         borderWidth: 1,
         borderRadius: 12,
@@ -35,7 +36,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         overflow: 'hidden',
         padding: 12,
-        textAlign:'center'
+        textAlign:'center',
+        flex: 1
     }
 })
 
@@ -45,6 +47,7 @@ class ScheduleShow extends React.Component {
 
     state = {
         showEditForm: false,
+        // markerToRemove: ''
     }
 
     editHandler = () => {
@@ -61,41 +64,50 @@ class ScheduleShow extends React.Component {
         this.props.afterDelete()
     }
 
+    // deleteMarkerHandler = (markerName) => {
+    //     this.setState({markerToRemove: markerName})
+    // }
+
 
     render() {
         return (
-            <View>
-                {this.state.showEditForm
-                ? 
-                <AddDestinationForm schedule={this.props.schedule} addDestinationInputHandler={this.props.addDestinationInputHandler} createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} showSchedule={this.props.showSchedule} results={this.props.results} closeEditForm={this.closeEditForm}/>
-                :
-                <View style={{justifyContent: 'space-between'}}>
-                    <Text style={{fontSize: 20, fontFamily: 'Damascus'}}>{this.props.schedule.name}</Text>
-                    <Text style={{fontSize:15, fontFamily: 'DamascusLight'}}>{this.props.schedule.location}</Text>
-                    <MapEmbed schedule={this.props.schedule} selectedScheduleDestinations={this.props.selectedScheduleDestinations} destinations={this.props.destinations}/>
-                    <Agenda destinations={this.props.destinations} selectedScheduleDestinations={this.props.selectedScheduleDestinations} date={this.props.schedule.date} scheduleId={this.props.schedule.id} deleteDestinationSchedule={this.props.deleteDestinationSchedule} lat={this.props.lat} long={this.props.long}/>
-                    <View style={{
-                        position: 'relative',
-                        top: 280,
-                        left: 0,
-                        right: 0,
-                        bottom: 270,
-                    }}>
-                        {/* <Button title="Edit Schedule" onPress={this.editHandler} /> */}
-                        <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-                            <TouchableHighlight style={styles.button}>
-                                <Button color='white' title="Edit Schedule" onPress={this.editHandler} />
-                            </TouchableHighlight>
-                            <TouchableHighlight style={styles.button}>
-                                <Button color='white' title="Delete Schedule" onPress={this.deleteHandler} />
-                            </TouchableHighlight>
+            
+                <View style={{flex: 1}}>
+                    {this.state.showEditForm
+                    ? 
+                    <AddDestinationForm schedule={this.props.schedule} addDestinationInputHandler={this.props.addDestinationInputHandler} createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} showSchedule={this.props.showSchedule} results={this.props.results} closeEditForm={this.closeEditForm}/>
+                    :
+                    <View style={{justifyContent: 'space-between', flex: 1}}>
+                        <Text style={{fontSize: 25, fontFamily: 'Damascus', flex: 1}}>{this.props.schedule.name}</Text>
+                        <Text style={{fontSize:18, fontFamily: 'DamascusLight', flex: 1}}>{this.props.schedule.location}</Text>
+                        <MapEmbed schedule={this.props.schedule} selectedScheduleDestinations={this.props.selectedScheduleDestinations} destinations={this.props.destinations}/>
+                        <Agenda destinations={this.props.destinations} schedule={this.props.schedule} selectedScheduleDestinations={this.props.selectedScheduleDestinations} date={this.props.schedule.date} scheduleId={this.props.schedule.id} deleteDestinationSchedule={this.props.deleteDestinationSchedule} lat={this.props.lat} long={this.props.long}/>
+                        <View style={{
+                            position: 'relative',
+                            top: 280,
+                            left: 0,
+                            right: 0,
+                            bottom: 270,
+                            flex: 1
+                        }}>
+                            <View style={{flexDirection: 'row', alignSelf: 'center', marginTop: 70, flex: 1}}>
+                                <TouchableHighlight style={styles.button}>
+                                    <Button color='white' title="Add Destination" onPress={this.editHandler} />
+                                </TouchableHighlight>
+                                <TouchableHighlight style={styles.button}>
+                                    <Button color='white' title="Delete Trip" onPress={this.deleteHandler} />
+                                </TouchableHighlight>
 
 
+                            </View>
                         </View>
                     </View>
+                    }
                 </View>
-                }
-            </View>
+
+            
+                
+            
         )
     }
 }

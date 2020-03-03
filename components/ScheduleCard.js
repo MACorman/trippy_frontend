@@ -10,7 +10,7 @@ import { faEye, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 
 const styles = StyleSheet.create({
     ScheduleCard: {
-        backgroundColor: '#f3acb4',
+        backgroundColor: '#b4c8da',
         borderRadius: 10,
         flex: 1, 
         flexDirection: 'column',
@@ -41,7 +41,7 @@ class ScheduleCard extends React.Component {
                         <Text style={{fontFamily:'DamascusLight'}}>{this.props.location}</Text>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={{fontFamily:'DamascusLight'}}>{`${this.props.date.slice(5, 7)}/${this.props.date.slice(8, 10)}/${this.props.date.slice(0, 4)}`}</Text>
-                            <FontAwesomeIcon icon={ faEye } onPress={this.buttonHandler} size={25} style={{paddingRight: 480, bottom: 6}} color={'#e23c52'}/>
+                            <FontAwesomeIcon icon={ faEye } onPress={this.buttonHandler} size={25} style={{paddingRight: 480, bottom: 6}} color={'#517CA4'}/>
                         </View>
 
                     </View>

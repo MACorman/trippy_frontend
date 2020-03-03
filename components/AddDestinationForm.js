@@ -16,7 +16,7 @@ import {
   const styles = StyleSheet.create({
     formFields: {
         paddingTop: 30,
-        borderBottomColor: '#e32c52', 
+        borderBottomColor: '#517CA4', 
         borderBottomWidth: 0.5,
         marginLeft: 20,
         marginRight: 20,
@@ -26,7 +26,7 @@ import {
         paddingTop: 10, 
     },
     button: {
-        backgroundColor: '#e23c52',
+        backgroundColor: '#517CA4',
         borderColor: 'white',
         borderWidth: 1,
         borderRadius: 12,
@@ -85,7 +85,7 @@ class AddDestinationForm extends React.Component {
                     </Text> 
                     <TextInput style={styles.formFields} placeholder="Must See Destination" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, mustSee: text}})}
                     value={this.state.formInput.mustSee}/>
-                    <Picker itemStyle={{ color: "#e32c52", fontSize: 18}} selectedValue={this.state.formInput.category} onValueChange={(itemValue) =>
+                    <Picker itemStyle={{ color: "#517CA4", fontSize: 18}} selectedValue={this.state.formInput.category} onValueChange={(itemValue) =>
                         this.setState({formInput: {...this.state.formInput, category: itemValue}})}>
                         <Picker.Item label="Aquarium" value="aquarium" />
                         <Picker.Item label="Art Gallery" value="art_gallery" />

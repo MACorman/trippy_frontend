@@ -4,20 +4,35 @@ import {
     TextInput,
     StyleSheet,
     Button,
-    Image
+    Image,
+    TouchableHighlight,
+    Text,
+    Alert
   } from 'react-native';
 
   const styles = StyleSheet.create({
     formFields: {
         paddingTop: 30,
-        borderBottomColor: 'black', 
+        borderBottomColor: '#517CA4', 
         borderBottomWidth: 0.5,
-        marginLeft: 30,
-        marginRight: 30,
+        marginLeft: 60,
+        marginRight: 60,
         paddingBottom: 10
     },
     form: {
         paddingTop: 260
+    },
+    button: {
+        backgroundColor: '#517CA4',
+        borderColor: 'white',
+        borderWidth: 1,
+        borderRadius: 12,
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 'bold',
+        overflow: 'hidden',
+        padding: 12,
+        textAlign:'center'
     }
   })
 
@@ -29,7 +44,9 @@ class LoginSignUp extends React.Component {
             username: "",
             password: "",
             passwordConfirmation: ""
-        }
+        },
+        passwordsDontMatch: false,
+        notAUser: false
     }
 
     loginHandler = () => {
@@ -46,18 +63,35 @@ class LoginSignUp extends React.Component {
         this.props.createUser(userObj)
     }
 
+    passwordsDontMatch = () => {
+        this.setState({passwordsDontMatch: true})
+        this.setState({formInput:{...this.state.formInput, password: '', passwordConfirmation: ''}})
+    }
+
+    notAUser = () => {
+        this.setState({notAUser: true})
+        this.setState({formInput:{...this.state.formInput, username: '', password: ''}})
+    }
+
     render() {
         return (
             <View style={styles.form}>
-                <Image style={{alignSelf: 'center'}} source={require('../img/TrippinLogo.png')}/>
-                <TextInput style={styles.formFields} placeholder="Username" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, username: text}})}
-                    value={this.state.formInput.username}/>
-                <TextInput style={styles.formFields} placeholder="Password" secureTextEntry={true} onChangeText={(text) => this.setState({formInput:{...this.state.formInput, password: text}})}
-                    value={this.state.formInput.password}/>
-                {this.state.showSignUp && <TextInput style={styles.formFields} placeholder="Password Confirmation" secureTextEntry={true} onChangeText={(text) => this.setState({formInput:{...this.state.formInput, passwordConfirmation: text}})}
-                    value={this.state.formInput.passwordConfirmation}/>}
-                {!this.state.showSignUp && <Button title="Login" onPress={this.loginHandler} />}
-                {this.state.showSignUp ? <Button title="Create Account" onPress={this.createAccountHandler} /> : <Button title="Signup" onPress={this.signupHandler} />}
+                
+                    <Image style={{alignSelf: 'center'}} source={require('../img/BlueTrippinLogo.png')}/>
+                    {this.state.passwordsDontMatch && Alert.alert('Passwords do not match.', 'Please try again.', [{text: 'Ok', onPress: () => this.setState({passwordsDontMatch: false})}])} 
+                    {this.state.notAUser && Alert.alert('You do not appear to have an account.',  'Please create one.', [{text: 'Ok', onPress: () => this.setState({notAUser: false})}])}  
+                    <TextInput style={styles.formFields} placeholder="Username" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, username: text.trim()}})}
+                        value={this.state.formInput.username}/>
+                    <TextInput style={styles.formFields} placeholder="Password" secureTextEntry={true} onChangeText={(text) => this.setState({formInput:{...this.state.formInput, password: text.trim()}})}
+                        value={this.state.formInput.password}/>
+                    {this.state.showSignUp && <TextInput style={styles.formFields} placeholder="Password Confirmation" secureTextEntry={true} onChangeText={(text) => this.setState({formInput:{...this.state.formInput, passwordConfirmation: text.trim()}})}
+                        value={this.state.formInput.passwordConfirmation}/>}
+                    {!this.state.showSignUp && <Button title="Login" color={'#517CA4'} onPress={this.props.users.map(u => u.username).includes(this.state.formInput.username) ? this.loginHandler : this.notAUser} />}
+                    {this.state.showSignUp ? <Button title="Create Account" color={'#517CA4'} onPress={this.state.formInput.password === this.state.formInput.passwordConfirmation ? this.createAccountHandler : this.passwordsDontMatch} /> : <Button title="Signup" color={'#517CA4'} onPress={this.signupHandler} />}
+
+                
+                
+
             </View>
         )
     }

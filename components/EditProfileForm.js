@@ -10,7 +10,7 @@ import {
   const styles = StyleSheet.create({
     formFields: {
         paddingTop: 30,
-        borderBottomColor: '#e32c52', 
+        borderBottomColor: '#517CA4', 
         borderBottomWidth: 0.5,
         marginLeft: 40,
         marginRight: 40,
@@ -21,7 +21,7 @@ import {
         paddingBottom: 20 
     },
     button: {
-        backgroundColor: '#e23c52',
+        backgroundColor: '#517CA4',
         borderColor: 'white',
         borderWidth: 1,
         borderRadius: 12,
