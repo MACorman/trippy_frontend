@@ -41,7 +41,7 @@ class ScheduleResults extends React.Component {
                         <Button title="Done" onPress={this.props.showSchedule? this.props.showSearchResults : this.props.renderResults} color={'white'}/>
                     </TouchableHighlight>
                 </View>
-                {this.props.results[0] ? this.props.results.map(result => <DestinationResultsCard key={result.id} {...result} createDestination={this.props.createDestination} category={this.props.newScheduleInput.category} scheduleName={this.props.newScheduleInput.name} selectedSchedule={this.props.selectedSchedule}/>) : <ActivityIndicator size="large" color="#517CA4"/>}
+                {this.props.results[0] ? this.props.results.map(result => <DestinationResultsCard key={result.id} {...result} createMarker={this.props.createMarker} createDestination={this.props.createDestination} category={this.props.newScheduleInput.category} scheduleName={this.props.newScheduleInput.name} selectedSchedule={this.props.selectedSchedule}/>) : <ActivityIndicator size="large" color="#517CA4"/>}
             </View>
         )
     }

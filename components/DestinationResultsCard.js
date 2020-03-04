@@ -49,7 +49,9 @@ class DestinationResultsCard extends React.Component {
 
     state = {
         isTimePickerVisible: false,
-        time: ""
+        time: "",
+        timePicked: false,
+        added: false
     }
 
     addDestinationHandler = () => {
@@ -60,6 +62,8 @@ class DestinationResultsCard extends React.Component {
         let newDestObj = {name, address, category, time}
         let scheduleName = this.props.scheduleName
         this.props.createDestination(newDestObj, scheduleName)
+        this.props.createMarker && this.props.createMarker(newDestObj)
+        this.setState({added: true})
     }
 
     showTimePicker = () => {
@@ -68,12 +72,13 @@ class DestinationResultsCard extends React.Component {
  
     hideTimePicker = () => {
          this.setState({isTimePickerVisible: false}) 
-    }
- 
-    handleConfirm = (time) => {
-         this.setState({time})
-         this.setState({isTimePickerVisible: false})
-    }
+        }
+        
+        handleConfirm = (time) => {
+            this.setState({time})
+            this.setState({isTimePickerVisible: false})
+            this.setState({timePicked: true})
+        }
     
     render() {
         return (
@@ -95,11 +100,11 @@ class DestinationResultsCard extends React.Component {
                     />
                     <View style={{flexDirection: 'row', alignSelf: 'center', paddingBottom: 15}}>
                         <TouchableHighlight style={styles.button}>
-                            <Button title="Select A Time" onPress={this.showTimePicker} color={'white'}/>
+                            <Button title={this.state.timePicked ? `${this.state.time.toISOString().slice(11, 13) - 5}:${this.state.time.toISOString().slice(14, 16)}` : "Select A Time"} onPress={this.showTimePicker} color={'white'}/>
                         </TouchableHighlight>
-                        <TouchableHighlight disabled={true} style={styles.button}>
-                            <Button title="Add To Schedule" onPress={this.addDestinationHandler} color={'white'}/>
-                        </TouchableHighlight>
+                        {this.state.timePicked && <TouchableHighlight disabled={true} style={styles.button}>
+                            <Button title={this.state.added ? "Added" : "Add To Schedule"} onPress={this.addDestinationHandler} color={'white'}/>
+                        </TouchableHighlight>}
                     </View>
                 </View>
             </View>

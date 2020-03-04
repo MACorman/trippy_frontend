@@ -4,7 +4,8 @@ import {
     TextInput,
     StyleSheet,
     Button,
-    TouchableHighlight
+    TouchableHighlight,
+    Text
   } from 'react-native';
 
   const styles = StyleSheet.create({
@@ -12,12 +13,12 @@ import {
         paddingTop: 30,
         borderBottomColor: '#517CA4', 
         borderBottomWidth: 0.5,
-        marginLeft: 40,
-        marginRight: 40,
+        marginLeft: 60,
+        marginRight: 60,
         paddingBottom: 5
     },
     form: {
-        paddingTop: 300,
+        paddingTop: 20,
         paddingBottom: 20 
     },
     button: {
@@ -48,11 +49,13 @@ class EditProfileForm extends React.Component {
         let editedUserObj = this.state
         this.props.editUser(editedUserObj)
         this.props.navigation.navigate("Profile")
+        this.setState({ username: this.props.username, image: this.props.image })
     }
 
     render() {
         return (
             <View>
+                <Text style={{alignSelf: 'center', paddingTop: 20, fontSize: 25, fontFamily: "Damascus", color: "#517CA4"}}>Edit Your Profile</Text>
                 <View style={styles.form}>
                     <TextInput style={styles.formFields} placeholder={this.props.currentUser.username} onChangeText={(text) => this.setState({username: text})}
                         value={this.state.username}/>

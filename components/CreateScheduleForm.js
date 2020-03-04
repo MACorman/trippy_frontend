@@ -19,8 +19,8 @@ import {
         paddingTop: 30,
         borderBottomColor: '#517CA4', 
         borderBottomWidth: 0.5,
-        marginLeft: 40,
-        marginRight: 40,
+        marginLeft: 60,
+        marginRight: 60,
         paddingBottom: 5
     },
     form: {
@@ -53,13 +53,21 @@ class CreateScheduleForm extends React.Component {
             mustSee: "",
             date: ""
         },
-        isDatePickerVisible: false
+        isDatePickerVisible: false,
+        dateSelected: false
     }
 
     formHandler = () => {
         let inputObj = this.state.formInput
         this.props.formInputHandler(inputObj)
         this.setState({showResults: true})
+        this.setState({formInput: {
+            name: "",
+            location: "", 
+            category: "",
+            mustSee: "",
+            date: ""
+        }})
     }
 
     showDatePicker = () => {
@@ -73,6 +81,7 @@ class CreateScheduleForm extends React.Component {
     handleConfirm = (date) => {
         this.setState({formInput: {...this.state.formInput, date: date}})
         this.setState({isDatePickerVisible: false})
+        this.setState({dateSelected: true})
     }
 
     renderResults = () => {
@@ -90,9 +99,10 @@ class CreateScheduleForm extends React.Component {
                         <ScheduleResults createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} renderResults={this.renderResults} results={this.props.results} selectedSchedule={this.props.selectedSchedule} />
                         :
                         <View>
+                            <Text style={{alignSelf: 'center', paddingTop: 5, fontSize: 25, fontFamily: "Damascus", color: "#517CA4"}}>Create A New Trip</Text>
                             <TextInput style={styles.formFields} placeholder="Trip Name" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, name: text}})}
                             value={this.state.formInput.name}/>
-                            <TextInput style={styles.formFields} placeholder="Vaction City" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, location: text}})}
+                            <TextInput style={styles.formFields} placeholder="Vacation City" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, location: text}})}
                             value={this.state.formInput.location}/>
                             <TextInput style={styles.formFields} placeholder="Must See Destination" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, mustSee: text}})}
                             value={this.state.formInput.mustSee}/>
@@ -120,7 +130,7 @@ class CreateScheduleForm extends React.Component {
                                 <Picker.Item label="Zoo" value="zoo" /> 
                             </Picker>
                             <TouchableHighlight style={styles.button}>
-                                <Button title="Select a Date" onPress={this.showDatePicker} color='white'/>
+                                <Button title={this.state.dateSelected ? `${this.state.formInput.date.toString().slice(4, 15)}` : "Select a Date"} onPress={this.showDatePicker} color='white'/>
                             </TouchableHighlight>
                             <DateTimePickerModal
                                 isVisible={this.state.isDatePickerVisible}
@@ -128,9 +138,9 @@ class CreateScheduleForm extends React.Component {
                                 onConfirm={this.handleConfirm}
                                 onCancel={this.hideDatePicker}
                             />
-                            <TouchableHighlight style={styles.button}>
+                            {this.state.dateSelected && <TouchableHighlight style={styles.button}>
                                 <Button title="Create Schedule" onPress={this.formHandler} color='white'/>
-                            </TouchableHighlight>
+                            </TouchableHighlight>}
                         </View>
                         }
                     </View>
