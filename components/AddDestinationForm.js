@@ -58,6 +58,13 @@ class AddDestinationForm extends React.Component {
         let inputObj = this.state.formInput
         this.props.addDestinationInputHandler(inputObj)
         this.setState({showResults: true})
+        this.setState({formInput: {
+            name: this.props.schedule.name,
+            location: this.props.schedule.location, 
+            category: "",
+            mustSee: "", 
+            date: this.props.schedule.date
+        }})
         
     }
 
@@ -71,17 +78,18 @@ class AddDestinationForm extends React.Component {
                 {
                 this.state.showResults 
                 ?
-                <ScheduleResults createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} showSchedule={this.props.showSchedule} showSearchResults={this.showSearchResults} results={this.props.results} />
+                <ScheduleResults createDestination={this.props.createDestination} createMarker={this.props.createMarker} newScheduleInput={this.props.newScheduleInput} showSchedule={this.props.showSchedule} showSearchResults={this.showSearchResults} results={this.props.results} />
                 :
                 <View style={styles.form}>
-                    <Text style={{fontSize: 25, fontFamily: 'Damascus'}}>
-                        {this.state.formInput.name}
+                    <Text style={{alignSelf: 'center', fontSize: 25, fontFamily: "Damascus", color: "#517CA4", paddingBottom: 10}}>Add a Destination to Your Trip</Text>
+                    <Text style={{fontSize: 20, fontFamily: 'Damascus', marginLeft: 20}}>
+                        Trip Name: {this.state.formInput.name}
                     </Text>
-                    <Text style={{fontSize: 18, fontFamily: 'DamascusLight'}}>
-                        {this.state.formInput.location}
+                    <Text style={{fontSize: 15, fontFamily: 'DamascusLight', marginLeft: 20}}>
+                        Location: {this.state.formInput.location}
                     </Text>
-                    <Text style={{fontSize: 18, fontFamily: 'DamascusLight'}}>
-                        {`${this.state.formInput.date.slice(5, 7)}/${this.state.formInput.date.slice(8, 10)}/${this.state.formInput.date.slice(0, 4)}`}
+                    <Text style={{fontSize: 15, fontFamily: 'DamascusLight', marginLeft: 20}}>
+                        Date: {`${this.state.formInput.date.slice(5, 7)}/${this.state.formInput.date.slice(8, 10)}/${this.state.formInput.date.slice(0, 4)}`}
                     </Text> 
                     <TextInput style={styles.formFields} placeholder="Must See Destination" onChangeText={(text) => this.setState({formInput: {...this.state.formInput, mustSee: text}})}
                     value={this.state.formInput.mustSee}/>

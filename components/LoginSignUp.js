@@ -20,7 +20,7 @@ import {
         paddingBottom: 10
     },
     form: {
-        paddingTop: 260
+        paddingTop: 250
     },
     button: {
         backgroundColor: '#517CA4',
@@ -32,7 +32,12 @@ import {
         fontWeight: 'bold',
         overflow: 'hidden',
         padding: 12,
-        textAlign:'center'
+        textAlign:'center',
+        width: 200,
+        alignSelf: 'center',
+        paddingBottom: 10,
+        paddingTop: 10,
+        marginTop: 20
     }
   })
 
@@ -86,8 +91,8 @@ class LoginSignUp extends React.Component {
                         value={this.state.formInput.password}/>
                     {this.state.showSignUp && <TextInput style={styles.formFields} placeholder="Password Confirmation" secureTextEntry={true} onChangeText={(text) => this.setState({formInput:{...this.state.formInput, passwordConfirmation: text.trim()}})}
                         value={this.state.formInput.passwordConfirmation}/>}
-                    {!this.state.showSignUp && <Button title="Login" color={'#517CA4'} onPress={this.props.users.map(u => u.username).includes(this.state.formInput.username) ? this.loginHandler : this.notAUser} />}
-                    {this.state.showSignUp ? <Button title="Create Account" color={'#517CA4'} onPress={this.state.formInput.password === this.state.formInput.passwordConfirmation ? this.createAccountHandler : this.passwordsDontMatch} /> : <Button title="Signup" color={'#517CA4'} onPress={this.signupHandler} />}
+                    {!this.state.showSignUp && <TouchableHighlight style={styles.button}><Button title="Login" color={'white'} onPress={this.props.users.map(u => u.username).includes(this.state.formInput.username) ? this.loginHandler : this.notAUser} /></TouchableHighlight>}
+                    {this.state.showSignUp ? <TouchableHighlight style={styles.button}><Button title="Create Account" color={'white'} onPress={this.state.formInput.password === this.state.formInput.passwordConfirmation ? this.createAccountHandler : this.passwordsDontMatch} /></TouchableHighlight> : <TouchableHighlight style={styles.button}><Button title="Signup" color={'white'} onPress={this.signupHandler} /></TouchableHighlight>}
 
                 
                 

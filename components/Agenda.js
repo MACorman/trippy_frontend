@@ -102,7 +102,7 @@ class Agenda extends React.Component {
                             {this.monthHandler()}{this.dateHandler()} 
                         </View>
                         {sortedDestinations.map(destination => (
-                            <DestinationCard key={destination.id} {...destination} scheduleId={this.props.scheduleId} deleteDestinationSchedule={this.props.deleteDestinationSchedule}/> 
+                            <DestinationCard key={destination.id} {...destination} scheduleId={this.props.scheduleId} deleteDestinationSchedule={this.props.deleteDestinationSchedule} deleteMarkerHandler={this.props.deleteMarkerHandler}/> 
                         ))}
                     </View>
                 </View>

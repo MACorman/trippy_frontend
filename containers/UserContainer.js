@@ -112,7 +112,7 @@ class UserContainer extends React.Component {
     }
 
     getDestinationResults = (category) => {
-        fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.lat},${this.state.long}&radius=800&type=${category}&key=${API_KEY}`)
+        fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.lat},${this.state.long}&radius=1600&type=${category}&key=${API_KEY}`)
         .then(resp => resp.json())
         .then(data => this.setState({apiResults: data.results}))
         .catch(err => console.error(err))
@@ -152,17 +152,17 @@ class UserContainer extends React.Component {
         })
     }
 
-    deleteSchedule = () => {
+    deleteSchedule = (id) => { // instead of using selected schedule id maybe pass id from schedule show
         let shortenedSchedulesArr = [...this.state.schedules]
-        shortenedSchedulesArr = shortenedSchedulesArr.filter(schedule => schedule.id !== this.state.selectedSchedule.id)
+        shortenedSchedulesArr = shortenedSchedulesArr.filter(schedule => schedule.id !== parseInt(id))
 
         let updatedUserSchedules = [...this.state.userSchedules]
-        updatedUserSchedules = updatedUserSchedules.filter(us => us.id !== this.state.selectedSchedule.id)
+        updatedUserSchedules = updatedUserSchedules.filter(us => us.schedule_id !== parseInt(id))
         this.setState({userSchedules: updatedUserSchedules, schedules: shortenedSchedulesArr})
         
 
         let userSchedulesToDelete = [...this.state.userSchedules]
-        userSchedulesToDelete = userSchedulesToDelete.filter(us => us.schedule_id === this.state.selectedSchedule.id)
+        userSchedulesToDelete = userSchedulesToDelete.filter(us => us.schedule_id === parseInt(id))
         userSchedulesToDelete.map(us => {
             fetch(`http://localhost:3000/user_schedules/${us.id}`, {
                 method: "DELETE"
@@ -206,6 +206,10 @@ class UserContainer extends React.Component {
         this.props.editCurrentUser(editedUserObj)
     }
 
+    // clearApiResults = () => {
+    //     this.setState({apiResults: []})
+    // }
+
     render() {
         return (
             <Drawer.Navigator
@@ -214,7 +218,7 @@ class UserContainer extends React.Component {
             }}
             >
                 <Drawer.Screen name="Profile">
-                    {props => <Profile {...props} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} schedules={this.state.schedules} userSchedules={this.state.userSchedules} schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} addDestinationInputHandler={this.addDestinationInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} selectedScheduleDestinations={this.state.selectedScheduleDestinations} lat={this.state.lat} long={this.state.long} />}
+                    {props => <Profile {...props} clearApiResults={this.clearApiResults} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} schedules={this.state.schedules} userSchedules={this.state.userSchedules} schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} addDestinationInputHandler={this.addDestinationInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} selectedScheduleDestinations={this.state.selectedScheduleDestinations} lat={this.state.lat} long={this.state.long} />}
                 </Drawer.Screen>
                 <Drawer.Screen name="Edit Profile">
                     {props => <EditProfileForm {...props} currentUser={this.props.currentUser} editUser={this.editUser}/>}

@@ -23,14 +23,14 @@ class SchedulesContainer extends React.Component {
 
     render() { 
         
-        let currentUserUserSchedules = this.props.userSchedules.filter(us => us.user_id == this.props.currentUser.id)
+        let currentUserUserSchedules = this.props.userSchedules.filter(us => us.user_id === this.props.currentUser.id)
         let currentUserSchedules = currentUserUserSchedules.map(cu => cu.schedule)
         let sortedCurrentUserSchedules = currentUserSchedules.sort(this.scheduleSort)
     
         return (
             <View style={{borderWidth: 3, borderColor: '#517CA4', borderRadius: 10, }}>
                 <Text style={{fontSize: 20, padding: 10, fontFamily: 'DamascusLight'}}>Upcoming Trips</Text>
-                {sortedCurrentUserSchedules.map(schedule => <ScheduleCard key={schedule.id} {...schedule} viewSchedule={this.props.viewSchedule} showSchedule={this.props.showSchedule}/>)}
+                {sortedCurrentUserSchedules.length >= 1 ? sortedCurrentUserSchedules.map(schedule => <ScheduleCard key={schedule.id} {...schedule} viewSchedule={this.props.viewSchedule} showSchedule={this.props.showSchedule}/>) : <View style={{backgroundColor: '#b4c8da', borderRadius: 10, marginLeft: 10, marginRight: 10, marginBottom: 10}}><Text style={{padding: 10, fontFamily: "Damascus", fontSize: 15}}>Swipe from the left side of the screen to plan a trip!</Text></View>}
             </View>
         )
     }
