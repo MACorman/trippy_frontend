@@ -2,11 +2,10 @@ import React from 'react'
 import {
     View,
     Text,
-    Button,
     StyleSheet
   } from 'react-native';
   import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faEye, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 const styles = StyleSheet.create({
     ScheduleCard: {
@@ -21,18 +20,13 @@ const styles = StyleSheet.create({
 })
 
 class ScheduleCard extends React.Component {
-    // state = {
-    //     viewScheduleButton: true
-    // }
 
     buttonHandler = () => {
-        // this.setState({viewScheduleButton: !this.state.viewScheduleButton})
         this.props.viewSchedule(this.props.id)
         this.props.showSchedule()
     }
 
-    render() {
-        
+    render() {   
         return (
             <View style={{paddingBottom: 17, marginRight: 10, marginLeft: 10}}>
                 <View style={styles.ScheduleCard}>
@@ -43,11 +37,8 @@ class ScheduleCard extends React.Component {
                             <Text style={{fontFamily:'DamascusLight'}}>{`${this.props.date.slice(5, 7)}/${this.props.date.slice(8, 10)}/${this.props.date.slice(0, 4)}`}</Text>
                             <FontAwesomeIcon icon={ faEye } onPress={this.buttonHandler} size={25} style={{paddingRight: 480, bottom: 6}} color={'#517CA4'}/>
                         </View>
-
                     </View>
-
                 </View>
-
             </View>
         )
     }

@@ -6,11 +6,10 @@ import {
     Button,
     Image,
     TouchableHighlight,
-    Text,
     Alert
-  } from 'react-native';
+} from 'react-native';
 
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     formFields: {
         paddingTop: 30,
         borderBottomColor: '#517CA4', 
@@ -20,7 +19,7 @@ import {
         paddingBottom: 10
     },
     form: {
-        paddingTop: 250
+        paddingTop: 240
     },
     button: {
         backgroundColor: '#517CA4',
@@ -39,7 +38,7 @@ import {
         paddingTop: 10,
         marginTop: 20
     }
-  })
+})
 
 class LoginSignUp extends React.Component {
 
@@ -80,23 +79,18 @@ class LoginSignUp extends React.Component {
 
     render() {
         return (
-            <View style={styles.form}>
-                
-                    <Image style={{alignSelf: 'center'}} source={require('../img/BlueTrippinLogo.png')}/>
-                    {this.state.passwordsDontMatch && Alert.alert('Passwords do not match.', 'Please try again.', [{text: 'Ok', onPress: () => this.setState({passwordsDontMatch: false})}])} 
-                    {this.state.notAUser && Alert.alert('You do not appear to have an account.',  'Please create one.', [{text: 'Ok', onPress: () => this.setState({notAUser: false})}])}  
-                    <TextInput style={styles.formFields} placeholder="Username" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, username: text.trim()}})}
-                        value={this.state.formInput.username}/>
-                    <TextInput style={styles.formFields} placeholder="Password" secureTextEntry={true} onChangeText={(text) => this.setState({formInput:{...this.state.formInput, password: text.trim()}})}
-                        value={this.state.formInput.password}/>
-                    {this.state.showSignUp && <TextInput style={styles.formFields} placeholder="Password Confirmation" secureTextEntry={true} onChangeText={(text) => this.setState({formInput:{...this.state.formInput, passwordConfirmation: text.trim()}})}
-                        value={this.state.formInput.passwordConfirmation}/>}
-                    {!this.state.showSignUp && <TouchableHighlight style={styles.button}><Button title="Login" color={'white'} onPress={this.props.users.map(u => u.username).includes(this.state.formInput.username) ? this.loginHandler : this.notAUser} /></TouchableHighlight>}
-                    {this.state.showSignUp ? <TouchableHighlight style={styles.button}><Button title="Create Account" color={'white'} onPress={this.state.formInput.password === this.state.formInput.passwordConfirmation ? this.createAccountHandler : this.passwordsDontMatch} /></TouchableHighlight> : <TouchableHighlight style={styles.button}><Button title="Signup" color={'white'} onPress={this.signupHandler} /></TouchableHighlight>}
-
-                
-                
-
+            <View style={styles.form}> 
+                <Image style={{alignSelf: 'center'}} source={require('../img/BlueTrippinLogo.png')}/>
+                {this.state.passwordsDontMatch && Alert.alert('Passwords do not match.', 'Please try again.', [{text: 'Ok', onPress: () => this.setState({passwordsDontMatch: false})}])} 
+                {this.state.notAUser && Alert.alert('You do not appear to have an account.',  'Please create one.', [{text: 'Ok', onPress: () => this.setState({notAUser: false})}])}  
+                <TextInput style={styles.formFields} placeholder="Username" onChangeText={(text) => this.setState({formInput:{...this.state.formInput, username: text.trim()}})}
+                    value={this.state.formInput.username}/>
+                <TextInput style={styles.formFields} placeholder="Password" secureTextEntry={true} onChangeText={(text) => this.setState({formInput:{...this.state.formInput, password: text.trim()}})}
+                    value={this.state.formInput.password}/>
+                {this.state.showSignUp && <TextInput style={styles.formFields} placeholder="Password Confirmation" secureTextEntry={true} onChangeText={(text) => this.setState({formInput:{...this.state.formInput, passwordConfirmation: text.trim()}})}
+                    value={this.state.formInput.passwordConfirmation}/>}
+                {!this.state.showSignUp && <TouchableHighlight style={styles.button}><Button title="Login" color={'white'} onPress={this.props.users.map(u => u.username).includes(this.state.formInput.username) ? this.loginHandler : this.notAUser} /></TouchableHighlight>}
+                {this.state.showSignUp ? <TouchableHighlight style={styles.button}><Button title="Create Account" color={'white'} onPress={this.state.formInput.password === this.state.formInput.passwordConfirmation ? this.createAccountHandler : this.passwordsDontMatch} /></TouchableHighlight> : <TouchableHighlight style={styles.button}><Button title="Signup" color={'white'} onPress={this.signupHandler} /></TouchableHighlight>}
             </View>
         )
     }

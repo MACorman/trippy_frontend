@@ -1,41 +1,38 @@
 import React from 'react'
 import {
     StyleSheet,
-    ScrollView,
     View,
     Text
   } from 'react-native';
 import DestinationCard from './DestinationCard';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
 
 
-  const styles = StyleSheet.create({
-        agendaContainer: {
-            flex: 1,
-            borderWidth: 3,
-            borderColor: '#517CA4',
 
-            // backgroundColor: '#f3acb4',
-            width: 375,
-            alignSelf: 'center', 
-            borderRadius: 10,
-            position: 'relative',
-            top: 330,
-            left: 0,
-            right: 0,
-            bottom: 270,
+const styles = StyleSheet.create({
+    agendaContainer: {
+        flex: 1,
+        borderWidth: 3,
+        borderColor: '#517CA4',
+        width: 375,
+        alignSelf: 'center', 
+        borderRadius: 10,
+        position: 'relative',
+        top: 330,
+        left: 0,
+        right: 0,
+        bottom: 270,
+
+    
+    }, 
+    agendaText: {
+        flex: 1,
+        width: 325,
+        alignSelf: 'center',
+        paddingTop: 10,
 
         
-        }, 
-        agendaText: {
-            flex: 1,
-            width: 325,
-            alignSelf: 'center',
-            paddingTop: 10,
-
-            
-        }
-    })
+    }
+})
 
 class Agenda extends React.Component {
 

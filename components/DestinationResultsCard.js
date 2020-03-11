@@ -34,7 +34,6 @@ const styles=StyleSheet.create({
         position: 'relative',
         justifyContent: 'space-between',
         width: 380,
-        // height: 165, 
         alignSelf: 'center'
            
     },
@@ -88,7 +87,7 @@ class DestinationResultsCard extends React.Component {
                         <Text style={{fontSize: 18, fontFamily: 'Damascus'}}>{this.props.name}</Text>
                         <Text style={{fontSize: 15, fontFamily: 'DamascusLight'}}>{this.props.opening_hours && this.props.opening_hours.open_now ? "Open" : "Closed" }</Text>
                         <Text style={{fontSize: 15, fontFamily: 'DamascusLight'}}>{this.props.vicinity}</Text>
-        <Text style={{fontSize: 15, fontFamily: 'DamascusLight'}}>{this.props.rating >= 1 ?`${this.props.rating} stars based on ${this.props.user_ratings_total} user ${this.props.user_ratings_total == 1 ? 'rating' : 'ratings'}` : 'No ratings yet'}</Text>
+                        <Text style={{fontSize: 15, fontFamily: 'DamascusLight'}}>{this.props.rating >= 1 ?`${this.props.rating} stars based on ${this.props.user_ratings_total} user ${this.props.user_ratings_total == 1 ? 'rating' : 'ratings'}` : 'No ratings yet'}</Text>
                     </View>
                     <DateTimePickerModal
                         isVisible={this.state.isTimePickerVisible}

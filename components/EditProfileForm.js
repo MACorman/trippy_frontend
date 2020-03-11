@@ -6,9 +6,9 @@ import {
     Button,
     TouchableHighlight,
     Text
-  } from 'react-native';
+} from 'react-native';
 
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     formFields: {
         paddingTop: 30,
         borderBottomColor: '#517CA4', 
@@ -35,7 +35,7 @@ import {
         width: 200,
         alignSelf: 'center',
     }
-  })
+})
 
 class EditProfileForm extends React.Component {
 
