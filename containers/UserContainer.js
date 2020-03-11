@@ -7,12 +7,11 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Drawer = createDrawerNavigator()
 
-
 class UserContainer extends React.Component {
 
     state = {
         schedules: [],
-        selectedSchedule: {},// eventually itd better for this to just be an id#, then find in schedules array
+        selectedSchedule: {},// eventually itd be better for this to just be an id#, then find in schedules array
         lat: "",
         long: "", 
         apiResults: [],
@@ -44,7 +43,6 @@ class UserContainer extends React.Component {
 
     viewSchedule = (id) => {
         let selectedSchedule = this.state.schedules.find(schedule => schedule.id === parseInt(id))
-        // let selectedScheduleDestinations = selectedSchedule.destinations //destinations is an empty array
         let selectedScheduleDestinations = this.state.destinations.filter(dest => dest.schedules.find(schedule => schedule.id === parseInt(id)))
         this.setState({ selectedSchedule, selectedScheduleDestinations })
         this.setState({showSchedule: !this.state.showSchedule})
@@ -97,7 +95,6 @@ class UserContainer extends React.Component {
             })
     }
 
-
     getDestinationCoords = (attractionName, category) => {
         fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${attractionName}&inputtype=textquery&fields=formatted_address,name,geometry&key=${API_KEY}`)
         .then(resp => resp.json())
@@ -106,9 +103,7 @@ class UserContainer extends React.Component {
             let long = data.candidates[0].geometry.location.lng
             this.setState({lat, long}, () => this.getDestinationResults(category))  
         })
-        .catch(err => console.error(err))
-
-        
+        .catch(err => console.error(err)) 
     }
 
     getDestinationResults = (category) => {
@@ -119,7 +114,6 @@ class UserContainer extends React.Component {
     }
 
     createDestination = (newDestObj, scheduleName) => {
-        // this.setState({selectedSchedule: this.state.schedules.find(s => s.id === parseInt(id))})
         fetch("http://localhost:3000/destinations", {
             method: "POST", 
             headers: {
@@ -152,7 +146,7 @@ class UserContainer extends React.Component {
         })
     }
 
-    deleteSchedule = (id) => { // instead of using selected schedule id maybe pass id from schedule show
+    deleteSchedule = (id) => { 
         let shortenedSchedulesArr = [...this.state.schedules]
         shortenedSchedulesArr = shortenedSchedulesArr.filter(schedule => schedule.id !== parseInt(id))
 
@@ -188,8 +182,7 @@ class UserContainer extends React.Component {
             method: "DELETE"
         })
         .then(resp => resp.json())
-        .then(console.log)
-        
+        .then(console.log)  
     }
 
     addDestinationInputHandler = (inputObj) => {
@@ -199,26 +192,17 @@ class UserContainer extends React.Component {
         attractionName = attractionName.toLowerCase().split(' ').join('%20')
         let category = inputObj.category
         this.getDestinationCoords(attractionName, category)
-
     }
 
     editUser = (editedUserObj) => {
         this.props.editCurrentUser(editedUserObj)
     }
 
-    // clearApiResults = () => {
-    //     this.setState({apiResults: []})
-    // }
-
     render() {
         return (
-            <Drawer.Navigator
-            drawerStyle={{
-                flex: 1
-            }}
-            >
+            <Drawer.Navigator>
                 <Drawer.Screen name="Profile">
-                    {props => <Profile {...props} clearApiResults={this.clearApiResults} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} schedules={this.state.schedules} userSchedules={this.state.userSchedules} schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} addDestinationInputHandler={this.addDestinationInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} selectedScheduleDestinations={this.state.selectedScheduleDestinations} lat={this.state.lat} long={this.state.long} />}
+                    {props => <Profile {...props} currentUser={this.props.currentUser} viewSchedule={this.viewSchedule} schedules={this.state.schedules} userSchedules={this.state.userSchedules} schedule={this.state.selectedSchedule} destinations={this.state.selectedScheduleDestinations} deleteSchedule={this.deleteSchedule} deleteDestinationSchedule={this.deleteDestinationSchedule} showAddDestination={this.showAddDestination} addDestinationInputHandler={this.addDestinationInputHandler} createDestination={this.createDestination} newScheduleInput={this.state.newScheduleInput} results={this.state.apiResults} selectedScheduleDestinations={this.state.selectedScheduleDestinations} lat={this.state.lat} long={this.state.long} />}
                 </Drawer.Screen>
                 <Drawer.Screen name="Edit Profile">
                     {props => <EditProfileForm {...props} currentUser={this.props.currentUser} editUser={this.editUser}/>}

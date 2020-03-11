@@ -5,16 +5,15 @@ import {
     ScrollView,
     View,
     Text,
-    Image,
     Button, 
     TextInput,
     Picker, 
     TouchableHighlight
-  } from 'react-native';
-  import ScheduleResults from '../containers/ScheduleResults'
-  import DateTimePickerModal from "react-native-modal-datetime-picker"
+} from 'react-native';
+import ScheduleResults from '../containers/ScheduleResults'
+import DateTimePickerModal from "react-native-modal-datetime-picker"
 
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     formFields: {
         paddingTop: 30,
         borderBottomColor: '#517CA4', 
@@ -40,7 +39,7 @@ import {
         width: 200,
         alignSelf: 'center',
     }
-  })
+})
 
 class CreateScheduleForm extends React.Component {
 

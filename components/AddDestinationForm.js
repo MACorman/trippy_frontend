@@ -1,19 +1,16 @@
 import React from 'react'
 import {
-    SafeAreaView,
     StyleSheet,
-    ScrollView,
     View,
     Text,
-    Image,
     Button, 
     TextInput,
     Picker,
     TouchableHighlight
-  } from 'react-native';
-  import ScheduleResults from '../containers/ScheduleResults'
+} from 'react-native';
+import ScheduleResults from '../containers/ScheduleResults'
 
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     formFields: {
         paddingTop: 30,
         borderBottomColor: '#517CA4', 
@@ -39,7 +36,7 @@ import {
         width: 200,
         alignSelf: 'center'
     }
-  })
+})
 
 class AddDestinationForm extends React.Component {
 
@@ -65,7 +62,6 @@ class AddDestinationForm extends React.Component {
             mustSee: "", 
             date: this.props.schedule.date
         }})
-        
     }
 
     showSearchResults = () => {

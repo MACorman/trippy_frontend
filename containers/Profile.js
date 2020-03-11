@@ -1,16 +1,13 @@
 import React from 'react'
 import {
-    SafeAreaView,
     ScrollView,
     View,
     Text,
-    Image,
-    Button,
-    FlatList
-  } from 'react-native';
-  import SchedulesContainer from './SchedulesContainer'
-  import ScheduleShow from './ScheduleShow'
-  import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+    Image
+} from 'react-native';
+import SchedulesContainer from './SchedulesContainer'
+import ScheduleShow from './ScheduleShow'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faHome } from '@fortawesome/free-solid-svg-icons'
 
 class Profile extends React.Component {
@@ -43,15 +40,12 @@ class Profile extends React.Component {
                         :
                         <View>
                             <FontAwesomeIcon icon={ faHome } onPress={() => this.setState({showSchedule: false})} size={30} color={'#517CA4'}/>
-                            <ScheduleShow schedule={this.props.schedule} clearApiResults={this.props.clearApiResults} afterDelete={this.afterDelete} destinations={this.props.destinations} deleteSchedule={this.props.deleteSchedule} deleteDestinationSchedule={this.props.deleteDestinationSchedule} showAddDestination={this.props.showAddDestination} addDestinationInputHandler={this.props.addDestinationInputHandler} createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} results={this.props.results} showSchedule={this.showSchedule} selectedScheduleDestinations={this.props.selectedScheduleDestinations} lat={this.props.lat} long={this.props.long}/>
+                            <ScheduleShow schedule={this.props.schedule} afterDelete={this.afterDelete} destinations={this.props.destinations} deleteSchedule={this.props.deleteSchedule} deleteDestinationSchedule={this.props.deleteDestinationSchedule} showAddDestination={this.props.showAddDestination} addDestinationInputHandler={this.props.addDestinationInputHandler} createDestination={this.props.createDestination} newScheduleInput={this.props.newScheduleInput} results={this.props.results} showSchedule={this.showSchedule} selectedScheduleDestinations={this.props.selectedScheduleDestinations} lat={this.props.lat} long={this.props.long}/>
                         </View>
                         }
                     </View>
                 </ScrollView>
-
-            </View>
-
-            
+            </View> 
         )
     }
 }

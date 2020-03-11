@@ -6,7 +6,7 @@ import {
     TouchableHighlight,
     StyleSheet,
     ActivityIndicator
-  } from 'react-native';
+} from 'react-native';
 import DestinationResultsCard from '../components/DestinationResultsCard';
 
 const styles = StyleSheet.create({
@@ -34,7 +34,6 @@ class ScheduleResults extends React.Component {
             <View>
                 <Text style={{fontSize: 20, fontFamily: 'Damascus'}} >{this.props.newScheduleInput.name}</Text>
                 <Text style={{fontSize: 18, fontFamily: 'DamascusLight'}}>Location: {this.props.newScheduleInput.location}</Text>
-                {/* <Text style={{fontSize: 18, fontFamily: 'DamascusLight'}}>Must See Attraction: {this.props.newScheduleInput.mustSee}</Text> */}
                 {this.props.newScheduleInput.category && <Text style={{fontSize: 18, fontFamily: 'DamascusLight'}} >{this.props.newScheduleInput.category.charAt(0).toUpperCase() + this.props.newScheduleInput.category.slice(1).split('_').join(' ')} results based on {this.props.newScheduleInput.mustSee}</Text>}
                 <View style={{paddingBottom: 10, paddingTop: 2}}>
                     <TouchableHighlight style={styles.button}>
@@ -48,6 +47,3 @@ class ScheduleResults extends React.Component {
 }
 
 export default ScheduleResults
-
-
-{/* <Text style={{fontSize: 18, fontFamily: 'DamascusLight', marginLeft: 15}} >Please wait while results load...</Text> */}
